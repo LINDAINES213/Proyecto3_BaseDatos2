@@ -12,11 +12,11 @@ def main():
     parser.add_argument('--column_family', type=str, help='Familia de columnas')
     parser.add_argument('--column', type=str, help='Nombre de la columna')
 
-    # scan
+    # Scan de tablas segun rango de filas
     parser.add_argument('--start_row', type=str, help='Clave de la fila de inicio (inclusive)')
     parser.add_argument('--stop_row', type=str, help='Clave de la fila de fin (exclusiva)')
-    
 
+        
     # Analizar los argumentos
     args = parser.parse_args()
 
@@ -44,9 +44,10 @@ def main():
 
     elif args.comando == 'list':
         tables = file_manager.list()
-        print("Tablas existentes:")
+        print("\nTablas existentes:")
         for table in tables:
             print(f"- {table}")
+        print()
 
     elif args.comando == 'count':
         if not args.tabla:
@@ -54,7 +55,7 @@ def main():
 
         try:
             row_count = file_manager.count(args.tabla)
-            print(f"Número de filas en la tabla '{args.tabla}': {row_count}")
+            print(f"\nNúmero de filas en la tabla '{args.tabla}': {row_count}\n")
         except ValueError as e:
             print(f"Error: {e}")
 
