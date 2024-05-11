@@ -17,8 +17,8 @@ describe: Mostrar la información detallada de una tabla (nombre, familias de co
 Funciones DML:
 
 put: Insertar o actualizar datos en una fila de la tabla.
-get: Obtener los datos de una fila específica o de una columna en particular. 
-scan: Escanear y mostrar los datos de la tabla dentro de un rango específico de filas.
+get: Obtener los datos de una fila específica o de una columna en particular. ✅
+scan: Escanear y mostrar los datos de la tabla dentro de un rango específico de filas. ✅
 delete: Eliminar una fila o una columna específica de la tabla.
 deleteAll: Eliminar todas las filas de la tabla.
 truncate: Truncar (vaciar) una tabla, lo cual implica deshabilitar, eliminar y recrear la tabla.
@@ -30,11 +30,11 @@ Esta clase se encargaría del manejo de los archivos HFile, que representan el a
 
 Funciones DDL:
 
-list: Listar las tablas existentes en el sistema.
+list: Listar las tablas existentes en el sistema. ✅
 disable: Deshabilitar una tabla para realizar operaciones de mantenimiento.
 isEnabled: Verificar si una tabla está habilitada o deshabilitada.
 dropAll: Eliminar todas las tablas existentes en el sistema.
 
 Funciones DML:
 
-count: Contar el número de filas en una tabla.
+count: Contar el número de filas en una tabla. ✅

@@ -1,5 +1,6 @@
 import argparse
 from tables import Table
+from HFileManager import HFileManager
 
 def main():
     # Crear el parser de argumentos
@@ -14,9 +15,13 @@ def main():
     # scan
     parser.add_argument('--start_row', type=str, help='Clave de la fila de inicio (inclusive)')
     parser.add_argument('--stop_row', type=str, help='Clave de la fila de fin (exclusiva)')
+    
 
     # Analizar los argumentos
     args = parser.parse_args()
+
+    file_manager = HFileManager('./datos')
+
 
     # Ejecutar el comando correspondiente
     if args.comando == 'get':
@@ -36,6 +41,22 @@ def main():
         tabla.load_from_json(args.archivo)
         output = tabla.scan(args.start_row, args.stop_row)
         print(output)
+
+    elif args.comando == 'list':
+        tables = file_manager.list()
+        print("Tablas existentes:")
+        for table in tables:
+            print(f"- {table}")
+
+    elif args.comando == 'count':
+        if not args.tabla:
+            parser.error('Debe proporcionar el nombre de la tabla')
+
+        try:
+            row_count = file_manager.count(args.tabla)
+            print(f"Número de filas en la tabla '{args.tabla}': {row_count}")
+        except ValueError as e:
+            print(f"Error: {e}")
 
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')
