@@ -1,0 +1,67 @@
+{
+    "table_name": "usuarios",
+    "column_families": [
+        "info_personal",
+        "contacto"
+    ],
+    "data": [
+        {
+        "row_key": "user1",
+        "columns": [
+        {
+            "family": "info_personal",
+            "column": "nombre",
+            "value": "Juan Perez",
+            "timestamp": 1683720000
+        },
+        {
+            "family": "info_personal",
+            "column": "edad",
+            "value": 25,
+            "timestamp": 1683720000
+        },
+        {
+            "family": "contacto",
+            "column": "email",
+            "value": "juan@example.com",
+            "timestamp": 1683720000
+        },
+        {
+            "family": "contacto",
+            "column": "telefono",
+            "value": 54071229,
+            "timestamp": 1683720000
+        }
+        ]
+    },
+    {
+        "row_key": "user2",
+        "columns": [
+        {
+            "family": "info_personal",
+            "column": "nombre",
+            "value": "Maria Gonzalez",
+            "timestamp": 1683720000
+        },
+        {
+            "family": "info_personal",
+            "column": "edad",
+            "value": 32,
+            "timestamp": 1683720000
+        },
+        {
+            "family": "contacto",
+            "column": "email",
+            "value": "maria@example.com",
+            "timestamp": 1683720000
+        },
+        {
+            "family": "contacto",
+            "column": "telefono",
+            "value": 59662127,
+            "timestamp": 1683720000
+        }
+        ]
+    }
+    ]
+}

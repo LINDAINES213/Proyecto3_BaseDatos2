@@ -1,0 +1,40 @@
+Clase principal: HBase
+
+Esta clase representará la instancia principal de tu simulador de HBase y coordinará la interacción entre las diferentes tablas.
+
+
+Clase Table
+
+Esta clase se encargará del manejo de las operaciones relacionadas con una tabla específica.
+
+Funciones DDL:
+
+create: Crear una nueva tabla.
+alter: Modificar la estructura de la tabla (por ejemplo, agregar o eliminar familias de columnas).
+drop: Eliminar una tabla existente.
+describe: Mostrar la información detallada de una tabla (nombre, familias de columnas, etc.).
+
+Funciones DML:
+
+put: Insertar o actualizar datos en una fila de la tabla.
+get: Obtener los datos de una fila específica o de una columna en particular. 
+scan: Escanear y mostrar los datos de la tabla dentro de un rango específico de filas.
+delete: Eliminar una fila o una columna específica de la tabla.
+deleteAll: Eliminar todas las filas de la tabla.
+truncate: Truncar (vaciar) una tabla, lo cual implica deshabilitar, eliminar y recrear la tabla.
+
+
+Clase HFileManager
+
+Esta clase se encargaría del manejo de los archivos HFile, que representan el almacenamiento físico de los datos de las tablas.
+
+Funciones DDL:
+
+list: Listar las tablas existentes en el sistema.
+disable: Deshabilitar una tabla para realizar operaciones de mantenimiento.
+isEnabled: Verificar si una tabla está habilitada o deshabilitada.
+dropAll: Eliminar todas las tablas existentes en el sistema.
+
+Funciones DML:
+
+count: Contar el número de filas en una tabla.
