@@ -18,3 +18,7 @@ python main.py list
 
 # Count rows
 python main.py count --tabla usuarios
+
+#Describe
+python main.py describe --tabla usuarios --archivo ./datos/usuarios.json
+

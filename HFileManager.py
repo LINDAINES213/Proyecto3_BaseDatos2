@@ -2,13 +2,15 @@ import os
 import json
 from tables import Table
 
+
 class HFileManager:
     def __init__(self, data_dir):
         self.data_dir = data_dir
         self.tables = {}  # Diccionario para almacenar las tablas cargadas
 
     def list(self):
-        table_files = [f for f in os.listdir(self.data_dir) if f.endswith('.json')]
+        table_files = [f for f in os.listdir(
+            self.data_dir) if f.endswith('.json')]
         table_names = [os.path.splitext(f)[0] for f in table_files]
         return table_names
 
@@ -19,7 +21,7 @@ class HFileManager:
 
         row_count = len(table.data)
         return row_count
-    
+
     def load_table(self, table_name):
         if table_name in self.tables:
             return self.tables[table_name]
@@ -36,3 +38,14 @@ class HFileManager:
         table.load_from_json(table_file)
         self.tables[table_name] = table
         return table
+
+    def describe(self, tabla, archivo):
+        table = self.load_table(tabla)
+        if table:
+            print(f"Nombre de la tabla: {tabla}")
+            print(f"Archivo JSON: {archivo}")
+            print("Data de archivo:")
+            for family in table.data:
+                print(f"- {family}")
+        else:
+            print(f"No se encontró la tabla '{tabla}'.")

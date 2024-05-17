@@ -2,6 +2,7 @@ import argparse
 from tables import Table
 from HFileManager import HFileManager
 
+
 def main():
     # Crear el parser de argumentos
     parser = argparse.ArgumentParser(description='Simulador de HBase')
@@ -9,35 +10,40 @@ def main():
     parser.add_argument('--tabla', type=str, help='Nombre de la tabla')
     parser.add_argument('--archivo', type=str, help='Ruta del archivo JSON')
     parser.add_argument('--row_key', type=str, help='Clave de la fila')
-    parser.add_argument('--column_family', type=str, help='Familia de columnas')
+    parser.add_argument('--column_family', type=str,
+                        help='Familia de columnas')
     parser.add_argument('--column', type=str, help='Nombre de la columna')
 
     # Scan de tablas segun rango de filas
-    parser.add_argument('--start_row', type=str, help='Clave de la fila de inicio (inclusive)')
-    parser.add_argument('--stop_row', type=str, help='Clave de la fila de fin (exclusiva)')
+    parser.add_argument('--start_row', type=str,
+                        help='Clave de la fila de inicio (inclusive)')
+    parser.add_argument('--stop_row', type=str,
+                        help='Clave de la fila de fin (exclusiva)')
 
-        
     # Analizar los argumentos
     args = parser.parse_args()
 
     file_manager = HFileManager('./datos')
 
-
     # Ejecutar el comando correspondiente
     if args.comando == 'get':
         if not args.tabla or not args.archivo or not args.row_key:
-            parser.error('Debe proporcionar el nombre de la tabla, la ruta del archivo JSON y la clave de la fila')
+            parser.error(
+                'Debe proporcionar el nombre de la tabla, la ruta del archivo JSON y la clave de la fila')
 
-        tabla = Table(args.tabla, []) # Asume que las familias de columnas se cargan desde el archivo JSON
+        # Asume que las familias de columnas se cargan desde el archivo JSON
+        tabla = Table(args.tabla, [])
         tabla.load_from_json(args.archivo)
         output = tabla.get(args.row_key, args.column_family, args.column)
         print(output)
 
     elif args.comando == 'scan':
         if not args.tabla or not args.archivo:
-            parser.error('Debe proporcionar el nombre de la tabla y la ruta del archivo JSON')
+            parser.error(
+                'Debe proporcionar el nombre de la tabla y la ruta del archivo JSON')
 
-        tabla = Table(args.tabla, [])  # Asume que las familias de columnas se cargan desde el archivo JSON
+        # Asume que las familias de columnas se cargan desde el archivo JSON
+        tabla = Table(args.tabla, [])
         tabla.load_from_json(args.archivo)
         output = tabla.scan(args.start_row, args.stop_row)
         print(output)
@@ -55,12 +61,20 @@ def main():
 
         try:
             row_count = file_manager.count(args.tabla)
-            print(f"\nNúmero de filas en la tabla '{args.tabla}': {row_count}\n")
+            print(f"\nNúmero de filas en la tabla '{
+                  args.tabla}': {row_count}\n")
         except ValueError as e:
             print(f"Error: {e}")
 
+    elif args.comando == 'describe':
+        if not args.tabla or not args.archivo:
+            parser.error(
+                'Debe proporcionar el nombre de la tabla y la ruta del archivo JSON')
+        file_manager.describe(args.tabla, args.archivo)
+
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')
+
 
 if __name__ == '__main__':
     main()
