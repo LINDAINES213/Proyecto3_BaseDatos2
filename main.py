@@ -132,6 +132,20 @@ def main():
             tabla.put(row_key, col_family_col_name, value)
             tabla.save_to_json(args.put_args[0])
 
+    # Ejecutar el comando correspondiente
+    elif args.comando == 'drop':
+        if not args.tabla:
+            parser.error('Debe proporcionar el nombre de la tabla')
+
+        result = file_manager.drop_table(args.tabla)
+        print(result)
+
+
+    elif args.comando == 'drop_all':
+        result = file_manager.drop_all()
+        print(result)
+
+
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')
 
