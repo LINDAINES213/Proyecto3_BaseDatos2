@@ -19,8 +19,11 @@ class HFileManager:
         if table is None:
             raise ValueError(f"La tabla '{table_name}' no existe.")
 
-        row_count = len(table.data)
-        return row_count
+        if table.disabled:
+            return "No se pueden realizar acciones sobre esta tabla, está deshabilitada", True
+        else:
+            row_count = len(table.data)
+            return row_count, False
 
     def load_table(self, table_name):
         if table_name in self.tables:

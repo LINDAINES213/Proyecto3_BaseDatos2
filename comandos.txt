@@ -19,9 +19,12 @@ python main.py list
 # Count rows
 python main.py count --tabla usuarios
 
-#Describe
+# Describe
 python main.py describe --tabla usuarios 
 
 # Put 
 python main.py put usuarios user2 info_personal:nombre "Juan Esteban"
+
+# disable: Deshabilita una tabla especificada
+python main.py disable usuarios
 

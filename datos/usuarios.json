@@ -98,8 +98,8 @@
           "column": "edad",
           "timestamps": [
             "45",
-            "48",
-            "48"
+            "45",
+            "45"
           ]
         },
         {
@@ -115,5 +115,5 @@
       ]
     }
   ],
-  "disabled": true
+  "disabled": false
 }

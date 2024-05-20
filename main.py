@@ -34,19 +34,24 @@ def main():
         # Asume que las familias de columnas se cargan desde el archivo JSON
         tabla = Table(args.tabla, [])
         tabla.load_from_json(args.tabla)
-        output = tabla.get(args.row_key, args.column_family, args.column)
-        print(output)
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
+        else:
+            output = tabla.get(args.row_key, args.column_family, args.column)
+            print(output)
 
     elif args.comando == 'scan':
         if not args.tabla:
-            parser.error(
-                'Debe proporcionar el nombre de la tabla')
+            parser.error('Debe proporcionar el nombre de la tabla')
 
         # Asume que las familias de columnas se cargan desde el archivo JSON
         tabla = Table(args.tabla, [])
         tabla.load_from_json(args.tabla)
-        output = tabla.scan(args.start_row, args.stop_row)
-        print(output)
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
+        else:
+            output = tabla.scan(args.start_row, args.stop_row)
+            print(output)
 
     elif args.comando == 'disable':
         tabla = Table(args.put_args[0], [])
@@ -69,29 +74,35 @@ def main():
             parser.error('Debe proporcionar el nombre de la tabla')
 
         try:
-            row_count = file_manager.count(args.tabla)
-            print(f"""\nNúmero de filas en la tabla '{
-                  args.tabla}': {row_count}\n""")
+            row_count, check = file_manager.count(args.tabla)
+            if check:
+                print(row_count)
+            else:
+                print(f"""\nNúmero de filas en la tabla '{args.tabla}': {row_count}\n""")
         except ValueError as e:
             print(f"Error: {e}")
 
     elif args.comando == 'describe':
         if not args.tabla:
-            parser.error(
-                'Debe proporcionar el nombre de la tabla')
-        file_manager.describe(args.tabla, args.tabla)
+            parser.error('Debe proporcionar el nombre de la tabla')
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
+        else:
+            file_manager.describe(args.tabla, args.tabla)
 
     elif args.comando == 'put':
         if len(args.put_args) < 4:
             parser.error('Debe proporcionar los argumentos: <tabla> <row_key> <col_family:col_name> <value>')
-
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
         row_key = args.put_args[1]
         col_family_col_name = args.put_args[2]
         value = ' '.join(args.put_args[3:])
-        tabla.put(row_key, col_family_col_name, value)
-        tabla.save_to_json(args.put_args[0])
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
+        else:
+            tabla.put(row_key, col_family_col_name, value)
+            tabla.save_to_json(args.put_args[0])
 
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')

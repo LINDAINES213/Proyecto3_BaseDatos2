@@ -31,7 +31,7 @@ Esta clase se encargaría del manejo de los archivos HFile, que representan el a
 Funciones DDL:
 
 list: Listar las tablas existentes en el sistema. ✅
-disable: Deshabilitar una tabla para realizar operaciones de mantenimiento. - Diego
+disable: Deshabilitar una tabla para realizar operaciones de mantenimiento. - Diego ✅ Solo falta implementarlo en las funciones que no estan creadas
 isEnabled: Verificar si una tabla está habilitada o deshabilitada. - Diego
 dropAll: Eliminar todas las tablas existentes en el sistema. - David
 
