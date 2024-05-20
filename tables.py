@@ -12,7 +12,8 @@ class Table:
         """
         Carga los datos de la tabla desde un archivo JSON.
         """
-        with open(json_file, 'r') as file:
+
+        with open('./datos/' + json_file  + ".json", 'r') as file:
             data = json.load(file)
 
         # Verificar que el nombre de la tabla coincida
@@ -28,10 +29,9 @@ class Table:
             for column in columns:
                 family = column['family']
                 col_name = column['column']
-                value = column['value']
-                timestamp = column['timestamp']
-                col_key = f"{family}:{col_name}:{timestamp}"
-                row_dict[col_key] = value
+                timestamps = column['timestamps']
+                col_key = f"{family}:{col_name}"
+                row_dict[col_key] = timestamps
             rows.append(row_dict)
 
         # Crear el DataFrame
@@ -55,12 +55,11 @@ class Table:
             }
             for col_key, value in row.items():
                 if col_key != 'row_key':
-                    family, col_name, timestamp = col_key.split(':')
+                    family, col_name = col_key.split(':')
                     column = {
                         'family': family,
                         'column': col_name,
-                        'value': value,
-                        'timestamp': int(timestamp)
+                        'timestamps': value.timestamps
                     }
                     row_data['columns'].append(column)
             data['data'].append(row_data)
@@ -128,6 +127,15 @@ class Table:
         if filtered_data.empty:
             return "No se encontraron filas en el rango especificado."
 
-        formatted_data = filtered_data.reset_index().rename(columns={'index': 'row_key'})
+        processed_data = []
+        for index, row in filtered_data.iterrows():
+            processed_row = {'row_key': index}
+            for col_name, timestamps in row.items():
+                processed_row[col_name] = timestamps[0]  # Solo tomar el primer elemento
+            processed_data.append(processed_row)
+
+        formatted_data = pd.DataFrame(processed_data)
+
+        #formatted_data = filtered_data.reset_index().rename(columns={'index': 'row_key'})
         formatted_table = tabulate(formatted_data, headers='keys', tablefmt='grid')
         return formatted_table

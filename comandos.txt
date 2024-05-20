@@ -1,17 +1,17 @@
 # Get fila especifica
-python main.py get --tabla usuarios --archivo usuarios.json --row_key user1
+python main.py get --tabla usuarios --row_key user1
 
 # Escanear toda la tabla
-python main.py scan --tabla usuarios --archivo ./datos/usuarios.json
+python main.py scan --tabla usuarios
 
 # Escanear desde una fila específica
-python main.py scan --tabla usuarios --archivo ./datos/usuarios.json --start_row user2
+python main.py scan --tabla usuarios --start_row user2
 
 # Escanear hasta una fila específica
-python main.py scan --tabla usuarios --archivo ./datos/usuarios.json --stop_row user2
+python main.py scan --tabla usuarios --stop_row user2
 
 # Escanear un rango de filas
-python main.py scan --tabla usuarios --archivo ./datos/usuarios.json --start_row user1 --stop_row user3
+python main.py scan --tabla usuarios --start_row user1 --stop_row user3
 
 # Listar tablas
 python main.py list
@@ -20,5 +20,5 @@ python main.py list
 python main.py count --tabla usuarios
 
 #Describe
-python main.py describe --tabla usuarios --archivo ./datos/usuarios.json
+python main.py describe --tabla usuarios 
 

@@ -26,7 +26,7 @@ class HFileManager:
         if table_name in self.tables:
             return self.tables[table_name]
 
-        table_file = os.path.join(self.data_dir, f"{table_name}.json")
+        table_file = './datos/' + table_name + '.json'
         if not os.path.exists(table_file):
             return None
 
@@ -35,7 +35,7 @@ class HFileManager:
 
         column_families = data['column_families']
         table = Table(table_name, column_families)
-        table.load_from_json(table_file)
+        table.load_from_json(table_name)
         self.tables[table_name] = table
         return table
 

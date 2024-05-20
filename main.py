@@ -23,28 +23,28 @@ def main():
     # Analizar los argumentos
     args = parser.parse_args()
 
-    file_manager = HFileManager('./datos')
+    file_manager = HFileManager('./datos',)
 
     # Ejecutar el comando correspondiente
     if args.comando == 'get':
-        if not args.tabla or not args.archivo or not args.row_key:
+        if not args.tabla or not args.row_key:
             parser.error(
-                'Debe proporcionar el nombre de la tabla, la ruta del archivo JSON y la clave de la fila')
+                'Debe proporcionar el nombre de la tabla y la clave de la fila')
 
         # Asume que las familias de columnas se cargan desde el archivo JSON
         tabla = Table(args.tabla, [])
-        tabla.load_from_json(args.archivo)
+        tabla.load_from_json(args.tabla)
         output = tabla.get(args.row_key, args.column_family, args.column)
         print(output)
 
     elif args.comando == 'scan':
-        if not args.tabla or not args.archivo:
+        if not args.tabla:
             parser.error(
-                'Debe proporcionar el nombre de la tabla y la ruta del archivo JSON')
+                'Debe proporcionar el nombre de la tabla')
 
         # Asume que las familias de columnas se cargan desde el archivo JSON
         tabla = Table(args.tabla, [])
-        tabla.load_from_json(args.archivo)
+        tabla.load_from_json(args.tabla)
         output = tabla.scan(args.start_row, args.stop_row)
         print(output)
 
@@ -61,16 +61,16 @@ def main():
 
         try:
             row_count = file_manager.count(args.tabla)
-            print(f"\nNúmero de filas en la tabla '{
-                  args.tabla}': {row_count}\n")
+            print(f"""\nNúmero de filas en la tabla '{
+                  args.tabla}': {row_count}\n""")
         except ValueError as e:
             print(f"Error: {e}")
 
     elif args.comando == 'describe':
-        if not args.tabla or not args.archivo:
+        if not args.tabla:
             parser.error(
-                'Debe proporcionar el nombre de la tabla y la ruta del archivo JSON')
-        file_manager.describe(args.tabla, args.archivo)
+                'Debe proporcionar el nombre de la tabla')
+        file_manager.describe(args.tabla, args.tabla)
 
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')
