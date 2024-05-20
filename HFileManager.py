@@ -45,11 +45,14 @@ class HFileManager:
     def describe(self, tabla, archivo):
         table = self.load_table(tabla)
         if table:
-            print(f"Nombre de la tabla: {tabla}")
-            print(f"Archivo JSON: {archivo}")
-            print("Data de archivo:")
-            for column_families in table.column_families:
-                print(f"- {column_families}")
+            if table.disabled:
+                print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
+            else:
+                print(f"Nombre de la tabla: {tabla}")
+                print(f"Archivo JSON: {archivo}")
+                print("Data de archivo:")
+                for column_families in table.column_families:
+                    print(f"- {column_families}")
         else:
             print(f"No se encontró la tabla '{tabla}'.")
 

@@ -85,10 +85,7 @@ def main():
     elif args.comando == 'describe':
         if not args.tabla:
             parser.error('Debe proporcionar el nombre de la tabla')
-        if tabla.disabled:
-            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
-        else:
-            file_manager.describe(args.tabla, args.tabla)
+        file_manager.describe(args.tabla, args.tabla)
 
     elif args.comando == 'put':
         if len(args.put_args) < 4:
