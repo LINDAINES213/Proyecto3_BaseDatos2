@@ -226,6 +226,7 @@ class Table:
         Verifica si la tabla está habilitada.
         """
         return self.disabled
+    
     def drop(self):
         """
         Elimina la tabla en memoria.

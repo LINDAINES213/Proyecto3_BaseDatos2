@@ -36,3 +36,7 @@ python main.py enable usuarios
 
 # is_enabled
 python main.py is_enabled usuarios
+
+# drop
+python main.py drop usuarios
+

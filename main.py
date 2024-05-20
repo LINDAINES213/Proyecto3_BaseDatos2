@@ -134,12 +134,10 @@ def main():
 
     # Ejecutar el comando correspondiente
     elif args.comando == 'drop':
-        if not args.tabla:
+        if not args.put_args[0]:
             parser.error('Debe proporcionar el nombre de la tabla')
-
-        result = file_manager.drop_table(args.tabla)
+        result = file_manager.drop_table(args.put_args[0])
         print(result)
-
 
     elif args.comando == 'drop_all':
         result = file_manager.drop_all()
