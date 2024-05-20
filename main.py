@@ -62,6 +62,15 @@ def main():
             tabla.disable()
             print(f"La tabla '{args.put_args[0]}' ha sido deshabilitada.")
 
+    elif args.comando == 'enable':
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        if tabla.disabled:
+            tabla.enable()
+            print(f"La tabla '{args.put_args[0]}' ha sido habilitada.")
+        else:
+            print(f"La tabla '{args.put_args[0]}' ya se encuentra deshabilitada.")
+
     elif args.comando == 'list':
         tables = file_manager.list()
         print("\nTablas existentes:")

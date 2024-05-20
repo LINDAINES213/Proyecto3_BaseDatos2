@@ -213,3 +213,10 @@ class Table:
         Verifica si la tabla está deshabilitada.
         """
         return self.disabled
+
+    def enable(self):
+        """
+        Deshabilita la tabla.
+        """
+        self.disabled = False
+        self.save_to_json(self.name)

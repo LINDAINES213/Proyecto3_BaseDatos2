@@ -28,3 +28,8 @@ python main.py put usuarios user2 info_personal:nombre "Juan Esteban"
 # disable: Deshabilita una tabla especificada
 python main.py disable usuarios
 
+# is_disable
+python main.py is_disable usuarios
+
+# enable
+python main.py enable usuarios 
