@@ -33,3 +33,6 @@ python main.py is_disable usuarios
 
 # enable
 python main.py enable usuarios 
+
+# is_enabled
+python main.py is_enabled usuarios

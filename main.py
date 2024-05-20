@@ -107,6 +107,17 @@ def main():
         else:
             print(f"La tabla '{args.put_args[0]}' no existe.")
 
+    elif args.comando == 'is_enabled':
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        if tabla: 
+            if tabla.is_enabled():
+                print(f"La tabla '{args.put_args[0]}' está deshabilitada.")
+            else:
+                print(f"La tabla '{args.put_args[0]}' está habilitada.")
+        else:
+            print(f"La tabla '{args.put_args[0]}' no existe.")
+
     elif args.comando == 'put':
         if len(args.put_args) < 4:
             parser.error('Debe proporcionar los argumentos: <tabla> <row_key> <col_family:col_name> <value>')

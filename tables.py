@@ -220,3 +220,9 @@ class Table:
         """
         self.disabled = False
         self.save_to_json(self.name)
+
+    def is_enabled(self):
+        """
+        Verifica si la tabla está habilitada.
+        """
+        return self.disabled
