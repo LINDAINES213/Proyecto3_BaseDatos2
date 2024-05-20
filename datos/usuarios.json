@@ -1,67 +1,87 @@
 {
     "table_name": "usuarios",
     "column_families": [
-        "info_personal",
-        "contacto"
+        {
+            "name": "info_personal",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW"
+        },
+        {
+            "name": "contacto",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW"
+        }
     ],
+    "stats": {
+        "total_rows": 2,
+        "total_columns": 4,
+        "max_column_family_size": {
+            "info_personal": 2,
+            "contacto": 2
+        }
+    },
     "data": [
         {
-        "row_key": "user1",
-        "columns": [
-        {
-            "family": "info_personal",
-            "column": "nombre",
-            "value": "Juan Perez",
-            "timestamp": 1683720000
+            "row_key": "user1",
+            "columns": [
+                {
+                    "family": "info_personal",
+                    "column": "nombre",
+                    "value": "Juan Perez",
+                    "timestamp": 1683720000
+                },
+                {
+                    "family": "info_personal",
+                    "column": "edad",
+                    "value": 25,
+                    "timestamp": 1683720000
+                },
+                {
+                    "family": "contacto",
+                    "column": "email",
+                    "value": "juan@example.com",
+                    "timestamp": 1683720000
+                },
+                {
+                    "family": "contacto",
+                    "column": "telefono",
+                    "value": 54071229,
+                    "timestamp": 1683720000
+                }
+            ]
         },
         {
-            "family": "info_personal",
-            "column": "edad",
-            "value": 25,
-            "timestamp": 1683720000
-        },
-        {
-            "family": "contacto",
-            "column": "email",
-            "value": "juan@example.com",
-            "timestamp": 1683720000
-        },
-        {
-            "family": "contacto",
-            "column": "telefono",
-            "value": 54071229,
-            "timestamp": 1683720000
+            "row_key": "user2",
+            "columns": [
+                {
+                    "family": "info_personal",
+                    "column": "nombre",
+                    "value": "Maria Gonzalez",
+                    "timestamp": 1683720000
+                },
+                {
+                    "family": "info_personal",
+                    "column": "edad",
+                    "value": 32,
+                    "timestamp": 1683720000
+                },
+                {
+                    "family": "contacto",
+                    "column": "email",
+                    "value": "maria@example.com",
+                    "timestamp": 1683720000
+                },
+                {
+                    "family": "contacto",
+                    "column": "telefono",
+                    "value": 59662127,
+                    "timestamp": 1683720000
+                }
+            ]
         }
-        ]
-    },
-    {
-        "row_key": "user2",
-        "columns": [
-        {
-            "family": "info_personal",
-            "column": "nombre",
-            "value": "Maria Gonzalez",
-            "timestamp": 1683720000
-        },
-        {
-            "family": "info_personal",
-            "column": "edad",
-            "value": 32,
-            "timestamp": 1683720000
-        },
-        {
-            "family": "contacto",
-            "column": "email",
-            "value": "maria@example.com",
-            "timestamp": 1683720000
-        },
-        {
-            "family": "contacto",
-            "column": "telefono",
-            "value": 59662127,
-            "timestamp": 1683720000
-        }
-        ]
-    }
     ]
 }

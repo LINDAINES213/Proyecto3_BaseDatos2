@@ -45,7 +45,7 @@ class HFileManager:
             print(f"Nombre de la tabla: {tabla}")
             print(f"Archivo JSON: {archivo}")
             print("Data de archivo:")
-            for family in table.data:
-                print(f"- {family}")
+            for column_families in table.column_families:
+                print(f"- {column_families}")
         else:
             print(f"No se encontró la tabla '{tabla}'.")
