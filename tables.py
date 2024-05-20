@@ -220,3 +220,33 @@ class Table:
         """
         self.disabled = False
         self.save_to_json(self.name)
+
+    def drop(self):
+        """
+        Elimina la tabla en memoria.
+        """
+        self.data = pd.DataFrame()
+        self.disabled = False
+        self.column_families = []
+        return f"La tabla '{self.name}' ha sido eliminada en memoria."
+    
+
+'''
+    def drop_table(self, table_name):
+        """
+        Elimina una tabla tanto en memoria como el archivo JSON correspondiente.
+        """
+        # Eliminar la tabla en memoria si está cargada
+        if table_name in self.tables:
+            self.tables[table_name].drop()
+            del self.tables[table_name]
+
+        # Eliminar el archivo JSON correspondiente
+        table_file = os.path.join(self.data_dir, table_name + '.json')
+        if os.path.exists(table_file):
+            os.remove(table_file)
+            return f"La tabla '{table_name}' ha sido eliminada del sistema de archivos y de la memoria."
+        else:
+            return f"La tabla '{table_name}' no existe en el sistema de archivos."
+ '''       
+
