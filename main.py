@@ -1,7 +1,7 @@
 import argparse
 from tables import Table
 from HFileManager import HFileManager
-
+import sys
 
 def main():
     # Crear el parser de argumentos
@@ -86,6 +86,17 @@ def main():
         if not args.tabla:
             parser.error('Debe proporcionar el nombre de la tabla')
         file_manager.describe(args.tabla, args.tabla)
+
+    elif args.comando == 'is_disabled':
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        if tabla: 
+            if tabla.is_disabled():
+                print(f"La tabla '{args.put_args[0]}' está deshabilitada.")
+            else:
+                print(f"La tabla '{args.put_args[0]}' está habilitada.")
+        else:
+            print(f"La tabla '{args.put_args[0]}' no existe.")
 
     elif args.comando == 'put':
         if len(args.put_args) < 4:

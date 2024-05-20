@@ -1,6 +1,8 @@
 import pandas as pd
 import json
 import math
+import os
+import sys
 from tabulate import tabulate
 
 class Table:
@@ -13,8 +15,13 @@ class Table:
         """
         Carga los datos de la tabla desde un archivo JSON.
         """
-
-        with open('./datos/' + json_file  + ".json", 'r') as file:
+        json_path = os.path.join('./datos', f"{json_file}.json")
+        if not os.path.exists(json_path):
+            print(f"Error: La tabla '{json_file}' no existe.")
+            sys.exit(1)
+            
+            
+        with open(json_path, 'r') as file:
             data = json.load(file)
 
         # Verificar que el nombre de la tabla coincida
@@ -200,3 +207,9 @@ class Table:
         """
         self.disabled = True
         self.save_to_json(self.name)
+
+    def is_disabled(self):
+        """
+        Verifica si la tabla está deshabilitada.
+        """
+        return self.disabled
