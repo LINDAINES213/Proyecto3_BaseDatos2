@@ -48,6 +48,15 @@ def main():
         output = tabla.scan(args.start_row, args.stop_row)
         print(output)
 
+    elif args.comando == 'disable':
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        if tabla.disabled:
+            print(f"La tabla '{args.put_args[0]}' ya se encuentra deshabilitada.")
+        else:
+            tabla.disable()
+            print(f"La tabla '{args.put_args[0]}' ha sido deshabilitada.")
+
     elif args.comando == 'list':
         tables = file_manager.list()
         print("\nTablas existentes:")
@@ -76,7 +85,6 @@ def main():
         if len(args.put_args) < 4:
             parser.error('Debe proporcionar los argumentos: <tabla> <row_key> <col_family:col_name> <value>')
 
-
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
         row_key = args.put_args[1]
@@ -84,7 +92,6 @@ def main():
         value = ' '.join(args.put_args[3:])
         tabla.put(row_key, col_family_col_name, value)
         tabla.save_to_json(args.put_args[0])
-
 
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')

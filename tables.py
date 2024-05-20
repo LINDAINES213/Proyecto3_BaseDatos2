@@ -21,6 +21,8 @@ class Table:
         if data['table_name'] != self.name:
             raise ValueError("El nombre de la tabla no coincide con el archivo JSON.")
 
+        self.disabled = data['disabled']
+
         # Crear una lista de diccionarios para el DataFrame
         rows = []
         for row in data['data']:
@@ -47,13 +49,15 @@ class Table:
         data = {
             'table_name': self.name,
             'column_families': self.column_families,
-            'data': []
+            'data': [],
+            'disabled': self.disabled
         }
 
         for row_key, row in self.data.iterrows():
             row_data = {
                 'row_key': row_key,
-                'columns': []
+                'columns': [],
+
             }
             for col_key, value in row.items():
                 if col_key != 'row_key':
@@ -189,3 +193,10 @@ class Table:
         #formatted_data = filtered_data.reset_index().rename(columns={'index': 'row_key'})
         formatted_table = tabulate(formatted_data, headers='keys', tablefmt='grid')
         return formatted_table
+    
+    def disable(self):
+        """
+        Deshabilita la tabla.
+        """
+        self.disabled = True
+        self.save_to_json(self.name)

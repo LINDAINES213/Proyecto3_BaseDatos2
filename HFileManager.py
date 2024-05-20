@@ -49,3 +49,5 @@ class HFileManager:
                 print(f"- {column_families}")
         else:
             print(f"No se encontró la tabla '{tabla}'.")
+
+
