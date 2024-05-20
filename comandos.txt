@@ -22,3 +22,6 @@ python main.py count --tabla usuarios
 #Describe
 python main.py describe --tabla usuarios 
 
+# Put 
+python main.py put usuarios user2 info_personal:nombre "Juan Esteban"
+

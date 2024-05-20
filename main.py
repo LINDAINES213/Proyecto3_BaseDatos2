@@ -10,15 +10,15 @@ def main():
     parser.add_argument('--tabla', type=str, help='Nombre de la tabla')
     parser.add_argument('--archivo', type=str, help='Ruta del archivo JSON')
     parser.add_argument('--row_key', type=str, help='Clave de la fila')
-    parser.add_argument('--column_family', type=str,
-                        help='Familia de columnas')
+    parser.add_argument('--column_family', type=str, help='Familia de columnas')
     parser.add_argument('--column', type=str, help='Nombre de la columna')
 
     # Scan de tablas segun rango de filas
-    parser.add_argument('--start_row', type=str,
-                        help='Clave de la fila de inicio (inclusive)')
-    parser.add_argument('--stop_row', type=str,
-                        help='Clave de la fila de fin (exclusiva)')
+    parser.add_argument('--start_row', type=str, help='Clave de la fila de inicio (inclusive)')
+    parser.add_argument('--stop_row', type=str, help='Clave de la fila de fin (exclusiva)')
+
+    # Argumentos específicos para el comando 'put'
+    parser.add_argument('put_args', nargs='*', help='Argumentos para el comando put')
 
     # Analizar los argumentos
     args = parser.parse_args()
@@ -71,6 +71,20 @@ def main():
             parser.error(
                 'Debe proporcionar el nombre de la tabla')
         file_manager.describe(args.tabla, args.tabla)
+
+    elif args.comando == 'put':
+        if len(args.put_args) < 4:
+            parser.error('Debe proporcionar los argumentos: <tabla> <row_key> <col_family:col_name> <value>')
+
+
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        row_key = args.put_args[1]
+        col_family_col_name = args.put_args[2]
+        value = ' '.join(args.put_args[3:])
+        tabla.put(row_key, col_family_col_name, value)
+        tabla.save_to_json(args.put_args[0])
+
 
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')

@@ -1,79 +1,118 @@
 {
-    "table_name": "usuarios",
-    "column_families": [
-        {
-            "name": "info_personal",
-            "max_versions": 3,
-            "compression": "NONE",
-            "in_memory": false,
-            "bloom_filter": "ROW"
-        },
-        {
-            "name": "contacto",
-            "max_versions": 3,
-            "compression": "NONE",
-            "in_memory": false,
-            "bloom_filter": "ROW"
-        }
-    ],
-    "stats": {
-        "total_rows": 2,
-        "total_columns": 4,
-        "max_column_family_size": {
-            "info_personal": 2,
-            "contacto": 2
-        }
+  "table_name": "usuarios",
+  "column_families": [
+    {
+      "name": "info_personal",
+      "max_versions": 3,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW"
     },
-    "data": [
+    {
+      "name": "contacto",
+      "max_versions": 3,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW"
+    }
+  ],
+  "data": [
+    {
+      "row_key": "user1",
+      "columns": [
         {
-            "row_key": "user1",
-            "columns": [
-                { 
-                    "family": "info_personal",
-                    "column": "nombre",
-                    "timestamps": ["Juan Perez"]
-                },
-                {
-                    "family": "info_personal",
-                    "column": "edad",
-                    "timestamps": [25] 
-                },
-                {
-                    "family": "contacto",
-                    "column": "email",
-                    "timestamps": ["juan@example.com"]
-                },
-                {
-                    "family": "contacto",
-                    "column": "telefono",
-                    "timestamps": [54071229]
-                }
-            ]
+          "family": "info_personal",
+          "column": "nombre",
+          "timestamps": [
+            "Juan Perez"
+          ]
         },
         {
-            "row_key": "user2",
-            "columns": [
-                {
-                    "family": "info_personal",
-                    "column": "nombre",
-                    "timestamps": ["Maria Gonzalez"]
-                },
-                {
-                    "family": "info_personal",
-                    "column": "edad",
-                    "timestamps": [32] 
-                },
-                {
-                    "family": "contacto",
-                    "column": "email",
-                    "timestamps": ["maria@example.com"]
-                },
-                {
-                    "family": "contacto",
-                    "column": "telefono",
-                    "timestamps": [59662127]
-                }
-            ]
+          "family": "info_personal",
+          "column": "edad",
+          "timestamps": [
+            25
+          ]
+        },
+        {
+          "family": "contacto",
+          "column": "email",
+          "timestamps": [
+            "juan@example.com"
+          ]
+        },
+        {
+          "family": "contacto",
+          "column": "telefono",
+          "timestamps": [
+            54071229
+          ]
         }
-    ]
+      ]
+    },
+    {
+      "row_key": "user2",
+      "columns": [
+        {
+          "family": "info_personal",
+          "column": "nombre",
+          "timestamps": [
+            "Maria Gonzalez"
+          ]
+        },
+        {
+          "family": "info_personal",
+          "column": "edad",
+          "timestamps": [
+            32
+          ]
+        },
+        {
+          "family": "contacto",
+          "column": "email",
+          "timestamps": [
+            "maria@example.com"
+          ]
+        },
+        {
+          "family": "contacto",
+          "column": "telefono",
+          "timestamps": [
+            59662127
+          ]
+        }
+      ]
+    },
+    {
+      "row_key": "user3",
+      "columns": [
+        {
+          "family": "info_personal",
+          "column": "nombre",
+          "timestamps": [
+            "Juan Esteban"
+          ]
+        },
+        {
+          "family": "info_personal",
+          "column": "edad",
+          "timestamps": [
+            "45",
+            "48",
+            "48"
+          ]
+        },
+        {
+          "family": "contacto",
+          "column": "email",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "telefono",
+          "timestamps": "NaN"
+        }
+      ]
+    }
+  ]
 }

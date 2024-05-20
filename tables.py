@@ -1,5 +1,6 @@
 import pandas as pd
 import json
+import math
 from tabulate import tabulate
 
 class Table:
@@ -37,6 +38,7 @@ class Table:
         # Crear el DataFrame
         self.data = pd.DataFrame(rows)
         self.data = self.data.set_index('row_key')
+        self.column_families = data['column_families']
 
     def save_to_json(self, json_file):
         """
@@ -55,18 +57,66 @@ class Table:
             }
             for col_key, value in row.items():
                 if col_key != 'row_key':
+                    if not isinstance(value, list) and not isinstance(value, str):
+                        print(value)
+                        if math.isnan(value): value = 'NaN'
                     family, col_name = col_key.split(':')
                     column = {
                         'family': family,
                         'column': col_name,
-                        'timestamps': value.timestamps
+                        'timestamps': value
                     }
                     row_data['columns'].append(column)
             data['data'].append(row_data)
 
-        with open(json_file, 'w') as file:
+        with open('./datos/' + json_file + '.json', 'w') as file:
             json.dump(data, file, indent=2)
 
+
+    def put(self, row_key, col_family_col_name, value):
+        """
+        Inserta o actualiza un valor en la tabla y guarda los cambios en un archivo JSON.
+
+        Args:
+            row_key (str): La clave de la fila.
+            col_family_col_name (str): El nombre de la columna en el formato 'familia:columna'.
+            value (str): El valor a insertar.
+        """
+        if ':' not in col_family_col_name:
+            raise ValueError("El nombre de la columna debe estar en el formato 'familia:columna'.")
+
+        family, col_name = col_family_col_name.split(':')
+
+        # Verificar si la familia de columnas existe y obtener max_versions
+        col_family = next((cf for cf in self.column_families if cf['name'] == family), None)
+        if not col_family:
+            raise ValueError(f"La familia de columnas '{family}' no existe en la tabla.")
+        max_versions = col_family.get('max_versions', 1)
+
+        # Si la fila no existe, crearla
+        if row_key not in self.data.index:
+            self.data.loc[row_key] = pd.Series()
+
+        # Actualizar o insertar el valor en la columna correspondiente
+        col_key = f"{family}:{col_name}"
+        if col_key not in self.data.columns:
+            self.data[col_key] = None
+
+        if pd.isna(self.data.at[row_key, col_key]).any():
+            self.data.at[row_key, col_key] = [value]
+        else:
+            if isinstance(self.data.at[row_key, col_key], str):
+                self.data.at[row_key, col_key] = [value]
+            else:
+                self.data.at[row_key, col_key].insert(0, value)
+                # Si el número de versiones excede max_versions, eliminar el último elemento
+                if len(self.data.at[row_key, col_key]) > max_versions:
+                    self.data.at[row_key, col_key] = self.data.at[row_key, col_key][:max_versions]
+
+        # Guardar los cambios en el archivo JSON
+        self.save_to_json(f'{self.name}')
+        print(self.data)
+        
     def get(self, row_key, column_family=None, column=None):
         """
         Obtiene los datos de una fila específica o de una columna en particular.
