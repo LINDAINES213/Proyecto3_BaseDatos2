@@ -237,6 +237,47 @@ class Table:
         return f"La tabla '{self.name}' ha sido eliminada en memoria."
     
 
+    def delete(self, row_key=None, column_family=None, column=None):
+        """
+        Elimina una fila específica o una columna específica de la tabla.
+
+        Args:
+            row_key (str, optional): La clave de la fila a eliminar. Si no se proporciona, se eliminará la columna especificada.
+            column_family (str, optional): La familia de columnas de la columna a eliminar. Requerido si se proporciona 'column'.
+            column (str, optional): El nombre de la columna a eliminar. Requerido si se proporciona 'column_family'.
+        """
+        if row_key is not None:
+            if row_key not in self.data.index:
+                return f"La fila con clave '{row_key}' no existe en la tabla."
+            else:
+                self.data.drop(index=row_key, inplace=True)
+                self.save_to_json(self.name)
+                return f"La fila con clave '{row_key}' ha sido eliminada de la tabla."
+
+        elif column_family is not None and column is not None:
+            col_key = f"{column_family}:{column}"
+            if col_key not in self.data.columns:
+                return f"La columna '{column_family}:{column}' no existe en la tabla."
+            else:
+                self.data.drop(columns=col_key, inplace=True)
+                self.save_to_json(self.name)
+                return f"La columna '{column_family}:{column}' ha sido eliminada de la tabla."
+        else:
+            return "Debe proporcionar la clave de la fila o la combinación de familia de columnas y columna para eliminar."
+
+    def deleteAll(self):
+        """
+        Elimina todas las filas de la tabla.
+        """
+        if self.data.empty:
+            return "La tabla está vacía, no hay filas para eliminar."
+        else:
+            self.data.drop(self.data.index, inplace=True)
+            self.save_to_json(self.name)
+            return "Todas las filas han sido eliminadas de la tabla."
+
+    
+
 '''
     def drop_table(self, table_name):
         """

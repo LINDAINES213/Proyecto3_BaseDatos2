@@ -143,6 +143,25 @@ def main():
         result = file_manager.drop_all()
         print(result)
 
+    elif args.comando == 'delete':
+        if not args.tabla:
+            parser.error('Debe proporcionar el nombre de la tabla')
+
+        tabla = Table(args.tabla, [])
+        tabla.load_from_json(args.tabla)
+        if args.row_key:
+            result = tabla.delete(row_key=args.row_key)
+            print(result)
+        elif args.column_family and args.column:
+            result = tabla.delete(column_family=args.column_family, column=args.column)
+            print(result)
+        else:
+            parser.error('Debe proporcionar la clave de la fila o la combinación de familia de columnas y columna para eliminar')
+
+    elif args.comando == 'deleteAll':
+        if not args.tabla:
+            parser.error('Debe proporcionar el nombre de la tabla')
+
 
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')
