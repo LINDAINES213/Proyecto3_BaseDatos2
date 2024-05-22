@@ -11,8 +11,8 @@ Funciones DDL:
 
 create: Crear una nueva tabla. - Jose
 alter: Modificar la estructura de la tabla (por ejemplo, agregar o eliminar familias de columnas). - Jose 
-drop: Eliminar una tabla existente. - David
- describe: Mostrar la información detallada de una tabla (nombre, familias de columnas, etc.). ✅
+drop: Eliminar una tabla existente. - David ✅
+describe: Mostrar la información detallada de una tabla (nombre, familias de columnas, etc.). ✅
 
 Funciones DML:
 
@@ -31,9 +31,9 @@ Esta clase se encargaría del manejo de los archivos HFile, que representan el a
 Funciones DDL:
 
 list: Listar las tablas existentes en el sistema. ✅
-disable: Deshabilitar una tabla para realizar operaciones de mantenimiento. - Diego ✅ Solo falta implementarlo en las funciones que no estan creadas
-isEnabled: Verificar si una tabla está habilitada o deshabilitada. - Diego
-dropAll: Eliminar todas las tablas existentes en el sistema. - David
+disable: Deshabilitar una tabla para realizar operaciones de mantenimiento. - Diego ✅ Solo falta implementarlo en las funciones que no estan creadas 
+isEnabled: Verificar si una tabla está habilitada o deshabilitada. - Diego ✅
+dropAll: Eliminar todas las tablas existentes en el sistema. - David ✅
 
 Funciones DML:
 

@@ -1,6 +1,7 @@
 import argparse
 from tables import Table
 from HFileManager import HFileManager
+import sys
 
 
 def main():
@@ -69,6 +70,16 @@ def main():
             tabla.disable()
             print(f"La tabla '{args.put_args[0]}' ha sido deshabilitada.")
 
+    elif args.comando == 'enable':
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        if tabla.disabled:
+            tabla.enable()
+            print(f"La tabla '{args.put_args[0]}' ha sido habilitada.")
+        else:
+            print(f"La tabla '{args.put_args[0]
+                               }' ya se encuentra deshabilitada.")
+
     elif args.comando == 'list':
         tables = file_manager.list()
         print("\nTablas existentes:")
@@ -95,6 +106,28 @@ def main():
             parser.error('Debe proporcionar el nombre de la tabla')
         file_manager.describe(args.tabla, args.tabla)
 
+    elif args.comando == 'is_disabled':
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        if tabla:
+            if tabla.is_disabled():
+                print(f"La tabla '{args.put_args[0]}' está deshabilitada.")
+            else:
+                print(f"La tabla '{args.put_args[0]}' está habilitada.")
+        else:
+            print(f"La tabla '{args.put_args[0]}' no existe.")
+
+    elif args.comando == 'is_enabled':
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        if tabla:
+            if tabla.is_enabled():
+                print(f"La tabla '{args.put_args[0]}' está deshabilitada.")
+            else:
+                print(f"La tabla '{args.put_args[0]}' está habilitada.")
+        else:
+            print(f"La tabla '{args.put_args[0]}' no existe.")
+
     elif args.comando == 'put':
         if len(args.put_args) < 4:
             parser.error(
@@ -109,6 +142,38 @@ def main():
         else:
             tabla.put(row_key, col_family_col_name, value)
             tabla.save_to_json(args.put_args[0])
+
+    # Ejecutar el comando correspondiente
+    elif args.comando == 'drop':
+        if not args.put_args[0]:
+            parser.error('Debe proporcionar el nombre de la tabla')
+        result = file_manager.drop_table(args.put_args[0])
+        print(result)
+
+    elif args.comando == 'drop_all':
+        result = file_manager.drop_all()
+        print(result)
+
+    elif args.comando == 'delete':
+        if not args.tabla:
+            parser.error('Debe proporcionar el nombre de la tabla')
+
+        tabla = Table(args.tabla, [])
+        tabla.load_from_json(args.tabla)
+        if args.row_key:
+            result = tabla.delete(row_key=args.row_key)
+            print(result)
+        elif args.column_family and args.column:
+            result = tabla.delete(
+                column_family=args.column_family, column=args.column)
+            print(result)
+        else:
+            parser.error(
+                'Debe proporcionar la clave de la fila o la combinación de familia de columnas y columna para eliminar')
+
+    elif args.comando == 'deleteAll':
+        if not args.tabla:
+            parser.error('Debe proporcionar el nombre de la tabla')
 
     elif args.comando == 'alter':
         if not args.tabla or not args.column_family:
