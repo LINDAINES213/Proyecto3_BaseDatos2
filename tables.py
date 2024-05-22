@@ -3,23 +3,24 @@ import json
 import math
 from tabulate import tabulate
 
+
 class Table:
     def __init__(self, name, column_families):
         self.name = name
         self.column_families = column_families
-        self.data = pd.DataFrame()
 
     def load_from_json(self, json_file):
         """
         Carga los datos de la tabla desde un archivo JSON.
         """
 
-        with open('./datos/' + json_file  + ".json", 'r') as file:
+        with open('./datos/' + json_file + ".json", 'r') as file:
             data = json.load(file)
 
         # Verificar que el nombre de la tabla coincida
         if data['table_name'] != self.name:
-            raise ValueError("El nombre de la tabla no coincide con el archivo JSON.")
+            raise ValueError(
+                "El nombre de la tabla no coincide con el archivo JSON.")
 
         self.disabled = data['disabled']
 
@@ -41,6 +42,7 @@ class Table:
         self.data = pd.DataFrame(rows)
         self.data = self.data.set_index('row_key')
         self.column_families = data['column_families']
+        self.stats = data.get('stats', {})
 
     def save_to_json(self, json_file):
         """
@@ -63,7 +65,8 @@ class Table:
                 if col_key != 'row_key':
                     if not isinstance(value, list) and not isinstance(value, str):
                         print(value)
-                        if math.isnan(value): value = 'NaN'
+                        if math.isnan(value):
+                            value = 'NaN'
                     family, col_name = col_key.split(':')
                     column = {
                         'family': family,
@@ -76,7 +79,6 @@ class Table:
         with open('./datos/' + json_file + '.json', 'w') as file:
             json.dump(data, file, indent=2)
 
-
     def put(self, row_key, col_family_col_name, value):
         """
         Inserta o actualiza un valor en la tabla y guarda los cambios en un archivo JSON.
@@ -87,14 +89,17 @@ class Table:
             value (str): El valor a insertar.
         """
         if ':' not in col_family_col_name:
-            raise ValueError("El nombre de la columna debe estar en el formato 'familia:columna'.")
+            raise ValueError(
+                "El nombre de la columna debe estar en el formato 'familia:columna'.")
 
         family, col_name = col_family_col_name.split(':')
 
         # Verificar si la familia de columnas existe y obtener max_versions
-        col_family = next((cf for cf in self.column_families if cf['name'] == family), None)
+        col_family = next(
+            (cf for cf in self.column_families if cf['name'] == family), None)
         if not col_family:
-            raise ValueError(f"La familia de columnas '{family}' no existe en la tabla.")
+            raise ValueError(f"La familia de columnas '{
+                             family}' no existe en la tabla.")
         max_versions = col_family.get('max_versions', 1)
 
         # Si la fila no existe, crearla
@@ -115,12 +120,13 @@ class Table:
                 self.data.at[row_key, col_key].insert(0, value)
                 # Si el número de versiones excede max_versions, eliminar el último elemento
                 if len(self.data.at[row_key, col_key]) > max_versions:
-                    self.data.at[row_key, col_key] = self.data.at[row_key, col_key][:max_versions]
+                    self.data.at[row_key, col_key] = self.data.at[row_key,
+                                                                  col_key][:max_versions]
 
         # Guardar los cambios en el archivo JSON
         self.save_to_json(f'{self.name}')
         print(self.data)
-        
+
     def get(self, row_key, column_family=None, column=None):
         """
         Obtiene los datos de una fila específica o de una columna en particular.
@@ -142,19 +148,21 @@ class Table:
             return f"La fila con clave '{row_key}' no existe en la tabla."
 
         if column_family and column:
-            filtered_data = row_data[row_data.index.str.contains(f"^{column_family}:{column}:")]
+            filtered_data = row_data[row_data.index.str.contains(
+                f"^{column_family}:{column}:")]
             if filtered_data.empty:
                 return f"La columna '{column_family}:{column}' no existe en la fila '{row_key}'."
             else:
                 return filtered_data.to_string(header=False)
 
         elif column_family:
-            filtered_data = row_data[row_data.index.str.startswith(f"{column_family}:")]
+            filtered_data = row_data[row_data.index.str.startswith(
+                f"{column_family}:")]
             return filtered_data.to_string(header=False)
 
         else:
             return row_data.to_string(header=False)
-        
+
     def scan(self, start_row=None, stop_row=None):
         """
         Escanea y muestra los datos de la tabla dentro de un rango específico de filas.
@@ -185,18 +193,49 @@ class Table:
         for index, row in filtered_data.iterrows():
             processed_row = {'row_key': index}
             for col_name, timestamps in row.items():
-                processed_row[col_name] = timestamps[0]  # Solo tomar el primer elemento
+                # Solo tomar el primer elemento
+                processed_row[col_name] = timestamps[0]
             processed_data.append(processed_row)
 
         formatted_data = pd.DataFrame(processed_data)
 
-        #formatted_data = filtered_data.reset_index().rename(columns={'index': 'row_key'})
-        formatted_table = tabulate(formatted_data, headers='keys', tablefmt='grid')
+        # formatted_data = filtered_data.reset_index().rename(columns={'index': 'row_key'})
+        formatted_table = tabulate(
+            formatted_data, headers='keys', tablefmt='grid')
         return formatted_table
-    
+
     def disable(self):
         """
         Deshabilita la tabla.
         """
         self.disabled = True
         self.save_to_json(self.name)
+
+    def alter_table(self, table_name, column_family):
+        table = self.load_table(table_name)
+        if table is None:
+            print(f"La tabla '{table_name}' no existe.")
+            return
+
+        # Verificar si la nueva column family ya existe
+        existing_families = [cf['name'] for cf in table.column_families]
+        if column_family in existing_families:
+            print(f"La columna familia '{
+                column_family}' ya existe en la tabla '{table_name}'.")
+            return
+
+        # Agregar la nueva column family
+        new_family = {
+            "name": column_family,
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": False,
+            "bloom_filter": "ROW"
+            # Añade otros atributos según sea necesario
+        }
+        table.column_families.append(new_family)
+
+        # Guardar los cambios en el archivo JSON
+        table.save_to_json(table_name)
+        print(f"La columna familia '{
+            column_family}' ha sido agregada a la tabla '{table_name}'.")
