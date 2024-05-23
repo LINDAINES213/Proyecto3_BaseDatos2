@@ -284,8 +284,6 @@ class Table:
             self.save_to_json(self.name)
             return "Todas las filas han sido eliminadas de la tabla."
 
-
-'''
     def drop_table(self, table_name):
         """
         Elimina una tabla tanto en memoria como el archivo JSON correspondiente.
@@ -302,33 +300,3 @@ class Table:
             return f"La tabla '{table_name}' ha sido eliminada del sistema de archivos y de la memoria."
         else:
             return f"La tabla '{table_name}' no existe en el sistema de archivos."
- '''
-
- def alter_table(self, table_name, column_family):
-      table = self.load_table(table_name)
-       if table is None:
-            print(f"La tabla '{table_name}' no existe.")
-            return
-
-        # Verificar si la nueva column family ya existe
-        existing_families = [cf['name'] for cf in table.column_families]
-        if column_family in existing_families:
-            print(f"La columna familia '{
-                column_family}' ya existe en la tabla '{table_name}'.")
-            return
-
-        # Agregar la nueva column family
-        new_family = {
-            "name": column_family,
-            "max_versions": 3,
-            "compression": "NONE",
-            "in_memory": False,
-            "bloom_filter": "ROW"
-            # Añade otros atributos según sea necesario
-        }
-        table.column_families.append(new_family)
-
-        # Guardar los cambios en el archivo JSON
-        table.save_to_json(table_name)
-        print(f"La columna familia '{
-            column_family}' ha sido agregada a la tabla '{table_name}'.")
