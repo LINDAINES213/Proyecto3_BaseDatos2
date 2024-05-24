@@ -48,5 +48,9 @@ python main.py alter --tabla usuarios --column_family testfamily --modify max_ve
 #Para borrar
 python main.py alter --tabla usuarios --column_family testfamily  --delete
 
-Truncate 
+#Truncate 
 python main.py truncate 'usuarios'
+
+# dropAll
+python main.py drop_all
+

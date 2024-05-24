@@ -104,7 +104,9 @@
           "family": "info_personal",
           "column": "nombre",
           "timestamps": [
-            "Juan Esteban"
+            "Diego",
+            "45",
+            "45"
           ]
         },
         {
@@ -129,5 +131,5 @@
       ]
     }
   ],
-  "disabled": true
+  "disabled": false
 }
