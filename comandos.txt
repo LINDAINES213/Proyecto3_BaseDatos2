@@ -40,3 +40,10 @@ python main.py is_enabled usuarios
 # drop
 python main.py drop usuarios
 
+#alter_table
+#Para añadir
+python main.py alter --tabla usuarios --column_family testfamily --add
+#Para modificar
+python main.py alter --tabla usuarios --column_family testfamily --modify max_versions 5 ttl 1209600
+#Para borrar
+python main.py alter --tabla usuarios --column_family testfamily  --delete

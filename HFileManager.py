@@ -85,34 +85,54 @@ class HFileManager:
         else:
             print(f"No se encontró la tabla '{tabla}'.")
 
-    def alter_table(self, table_name, column_family):
+    def alter_table(self, table_name, column_family, action, details=None):
         table = self.load_table(table_name)
         if table is None:
             print(f"La tabla '{table_name}' no existe.")
             return
 
-        # Verificar si la nueva column family ya existe
-        existing_families = [cf['name'] for cf in table.column_families]
-        if column_family in existing_families:
+        if action == 'add':
+            existing_families = [cf['name'] for cf in table.column_families]
+            if column_family in existing_families:
+                print(f"La columna familia '{
+                      column_family}' ya existe en la tabla '{table_name}'.")
+                return
+
+            new_family = {
+                "name": column_family,
+                "max_versions": 3,
+                "compression": "NONE",
+                "in_memory": False,
+                "bloom_filter": "ROW",
+                "ttl": 604800,
+                "blocksize": 65536,
+                "blockcache": True
+            }
+            table.column_families.append(new_family)
+            table.save_to_json(os.path.join(
+                self.data_dir, table_name + '.json'))
             print(f"La columna familia '{
-                  column_family}' ya existe en la tabla '{table_name}'.")
-            return
+                  column_family}' ha sido agregada a la tabla '{table_name}'.")
 
-        # Agregar la nueva column family
-        new_family = {
-            "name": column_family,
-            "max_versions": 3,
-            "compression": "NONE",
-            "in_memory": False,
-            "bloom_filter": "ROW",
-            "ttl": 604800,
-            "blocksize": 65536,
-            "blockcache": True
-            # Añade otros atributos según sea necesario
-        }
-        table.column_families.append(new_family)
+        elif action == 'modify':
+            for family in table.column_families:
+                if family['name'] == column_family:
+                    family.update(details)
+                    table.save_to_json(os.path.join(
+                        self.data_dir, table_name + '.json'))
+                    print(f"La columna familia '{
+                          column_family}' ha sido modificada en la tabla '{table_name}'.")
+                    return
+            print(f"La columna familia '{
+                  column_family}' no se encontró en la tabla '{table_name}'.")
 
-        # Guardar los cambios en el archivo JSON
-        table.save_to_json(table_name)
-        print(f"La columna familia '{
-              column_family}' ha sido agregada a la tabla '{table_name}'.")
+        elif action == 'delete':
+            table.column_families = [
+                cf for cf in table.column_families if cf['name'] != column_family]
+            table.save_to_json(os.path.join(
+                self.data_dir, table_name + '.json'))
+            print(f"La columna familia '{
+                  column_family}' ha sido eliminada de la tabla '{table_name}'.")
+
+        else:
+            print(f"Acción '{action}' no reconocida.")

@@ -2,6 +2,7 @@ import argparse
 from tables import Table
 from HFileManager import HFileManager
 import sys
+import json
 
 
 def main():
@@ -24,9 +25,13 @@ def main():
     # Argumentos específicos para el comando 'put'
     parser.add_argument('put_args', nargs='*',
                         help='Argumentos para el comando put')
+    parser.add_argument('--add', action='store_true',
+                        help='Agregar una nueva column family')
+    parser.add_argument('--modify', nargs='+',
+                        help='Argumentos de modificación para la columna familia')
 
-    parser.add_argument('alter_args', nargs='+',
-                        help='Argumentos para el comando alter')
+    parser.add_argument('--delete', action='store_true',
+                        help='Eliminar una column family existente')
     # Analizar los argumentos
     args = parser.parse_args()
 
@@ -175,13 +180,57 @@ def main():
         if not args.tabla:
             parser.error('Debe proporcionar el nombre de la tabla')
 
-    elif args.comando == 'alter':
+    if args.comando == 'alter':
         if not args.tabla or not args.column_family:
             parser.error(
-                'Debe proporcionar los argumentos: <tabla> <new_column_family>')
-        tabla_name = args.tabla
-        column_family = args.column_family
-        file_manager.alter_table(tabla_name, column_family)
+                'Debe proporcionar los argumentos: <tabla> <column_family>')
+
+        table = file_manager.load_table(args.tabla)
+        if not table:
+            parser.error(f"La tabla '{args.tabla}' no existe.")
+
+        if args.add:
+            existing_families = [cf['name'] for cf in table.column_families]
+            if args.column_family in existing_families:
+                print(f"La columna familia '{
+                      args.column_family}' ya existe en la tabla '{args.tabla}'.")
+            else:
+                new_family = {
+                    "name": args.column_family,
+                    "max_versions": 3,
+                    "compression": "NONE",
+                    "in_memory": False,
+                    "bloom_filter": "ROW",
+                    "ttl": 604800,
+                    "blocksize": 65536,
+                    "blockcache": True
+                }
+                table.column_families.append(new_family)
+                table.save_to_json(args.tabla)
+                print(f"La columna familia '{
+                      args.column_family}' ha sido agregada a la tabla '{args.tabla}'.")
+
+        elif args.modify:
+            details = dict(zip(args.modify[::2], args.modify[1::2]))
+            for family in table.column_families:
+                if family['name'] == args.column_family:
+                    family.update(details)
+                    table.save_to_json(args.tabla)
+                    print(f"La columna familia '{
+                          args.column_family}' ha sido modificada en la tabla '{args.tabla}'.")
+                    return
+            print(f"La columna familia '{
+                  args.column_family}' no se encontró en la tabla '{args.tabla}'.")
+
+        elif args.delete:
+            table.column_families = [
+                cf for cf in table.column_families if cf['name'] != args.column_family]
+            table.save_to_json(args.tabla)
+            print(f"La columna familia '{
+                  args.column_family}' ha sido eliminada de la tabla '{args.tabla}'.")
+
+        else:
+            print("Debe especificar una acción: --add, --modify <detalles> o --delete.")
 
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')
