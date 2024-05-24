@@ -104,8 +104,7 @@ class Table:
         col_family = next(
             (cf for cf in self.column_families if cf['name'] == family), None)
         if not col_family:
-            raise ValueError(f"La familia de columnas '{
-                             family}' no existe en la tabla.")
+            raise ValueError(f"La familia de columnas '{family}' no existe en la tabla.")
         max_versions = col_family.get('max_versions', 1)
 
         # Si la fila no existe, crearla
@@ -300,3 +299,23 @@ class Table:
             return f"La tabla '{table_name}' ha sido eliminada del sistema de archivos y de la memoria."
         else:
             return f"La tabla '{table_name}' no existe en el sistema de archivos."
+        
+    def truncate(self):
+        """
+        Trunca (vacía) la tabla deshabilitándola, eliminándola y recreándola con la misma estructura.
+        """
+        # Deshabilitar la tabla
+        self.disable()
+
+        # Guardar la estructura de la tabla
+        column_families = self.column_families
+
+        # Eliminar la tabla
+        self.drop()
+
+        # Volver a crear la tabla con la misma estructura
+        self.column_families = column_families
+        self.data = pd.DataFrame(columns=[f"{cf['name']}:{col}" for cf in column_families for col in ['column']])
+        self.save_to_json(self.name)
+
+        return f"Todos los datos de la tabla '{self.name}' han sido eliminados y la tabla ha sido recreada."

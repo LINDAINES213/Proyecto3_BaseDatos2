@@ -69,8 +69,7 @@ def main():
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
         if tabla.disabled:
-            print(f"La tabla '{args.put_args[0]
-                               }' ya se encuentra deshabilitada.")
+            print(f"La tabla '{args.put_args[0]}' ya se encuentra deshabilitada.")
         else:
             tabla.disable()
             print(f"La tabla '{args.put_args[0]}' ha sido deshabilitada.")
@@ -82,8 +81,7 @@ def main():
             tabla.enable()
             print(f"La tabla '{args.put_args[0]}' ha sido habilitada.")
         else:
-            print(f"La tabla '{args.put_args[0]
-                               }' ya se encuentra deshabilitada.")
+            print(f"La tabla '{args.put_args[0]}' ya se encuentra deshabilitada.")
 
     elif args.comando == 'list':
         tables = file_manager.list()
@@ -192,8 +190,7 @@ def main():
         if args.add:
             existing_families = [cf['name'] for cf in table.column_families]
             if args.column_family in existing_families:
-                print(f"La columna familia '{
-                      args.column_family}' ya existe en la tabla '{args.tabla}'.")
+                print(f"La columna familia '{args.column_family}' ya existe en la tabla '{args.tabla}'.")
             else:
                 new_family = {
                     "name": args.column_family,
@@ -207,8 +204,7 @@ def main():
                 }
                 table.column_families.append(new_family)
                 table.save_to_json(args.tabla)
-                print(f"La columna familia '{
-                      args.column_family}' ha sido agregada a la tabla '{args.tabla}'.")
+                print(f"La columna familia '{args.column_family}' ha sido agregada a la tabla '{args.tabla}'.")
 
         elif args.modify:
             details = dict(zip(args.modify[::2], args.modify[1::2]))
@@ -216,21 +212,27 @@ def main():
                 if family['name'] == args.column_family:
                     family.update(details)
                     table.save_to_json(args.tabla)
-                    print(f"La columna familia '{
-                          args.column_family}' ha sido modificada en la tabla '{args.tabla}'.")
+                    print(f"La columna familia '{args.column_family}' ha sido modificada en la tabla '{args.tabla}'.")
                     return
-            print(f"La columna familia '{
-                  args.column_family}' no se encontró en la tabla '{args.tabla}'.")
+            print(f"La columna familia '{args.column_family}' no se encontró en la tabla '{args.tabla}'.")
 
         elif args.delete:
             table.column_families = [
                 cf for cf in table.column_families if cf['name'] != args.column_family]
             table.save_to_json(args.tabla)
-            print(f"La columna familia '{
-                  args.column_family}' ha sido eliminada de la tabla '{args.tabla}'.")
+            print(f"La columna familia '{args.column_family}' ha sido eliminada de la tabla '{args.tabla}'.")
 
         else:
             print("Debe especificar una acción: --add, --modify <detalles> o --delete.")
+    
+    elif args.comando == 'truncate':
+        if not args.tabla:
+            parser.error('Debe proporcionar el nombre de la tabla')
+
+        tabla = Table(args.tabla, [])
+        tabla.load_from_json(args.tabla)
+        result = tabla.truncate()
+        print(result)
 
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')

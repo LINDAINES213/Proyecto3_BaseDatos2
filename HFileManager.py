@@ -64,8 +64,7 @@ class HFileManager:
                         f"  - TTL: {family.get('ttl', 'Desconocido')} segundos")
                     print(
                         f"  - Blocksize: {family.get('blocksize', 'Desconocido')} bytes")
-                    print(f"  - Blockcache: {'Habilitada' if family.get(
-                        'blockcache', False) else 'Deshabilitada'}")
+                    print(f"  - Blockcache: {'Habilitada' if family.get('blockcache', False) else 'Deshabilitada'}")
                 else:
                     print(f"- {family}")
 
@@ -94,8 +93,7 @@ class HFileManager:
         if action == 'add':
             existing_families = [cf['name'] for cf in table.column_families]
             if column_family in existing_families:
-                print(f"La columna familia '{
-                      column_family}' ya existe en la tabla '{table_name}'.")
+                print(f"La columna familia '{column_family}' ya existe en la tabla '{table_name}'.")
                 return
 
             new_family = {
@@ -111,8 +109,7 @@ class HFileManager:
             table.column_families.append(new_family)
             table.save_to_json(os.path.join(
                 self.data_dir, table_name + '.json'))
-            print(f"La columna familia '{
-                  column_family}' ha sido agregada a la tabla '{table_name}'.")
+            print(f"La columna familia '{column_family}' ha sido agregada a la tabla '{table_name}'.")
 
         elif action == 'modify':
             for family in table.column_families:
@@ -120,19 +117,16 @@ class HFileManager:
                     family.update(details)
                     table.save_to_json(os.path.join(
                         self.data_dir, table_name + '.json'))
-                    print(f"La columna familia '{
-                          column_family}' ha sido modificada en la tabla '{table_name}'.")
+                    print(f"La columna familia '{column_family}' ha sido modificada en la tabla '{table_name}'.")
                     return
-            print(f"La columna familia '{
-                  column_family}' no se encontró en la tabla '{table_name}'.")
+            print(f"La columna familia '{column_family}' no se encontró en la tabla '{table_name}'.")
 
         elif action == 'delete':
             table.column_families = [
                 cf for cf in table.column_families if cf['name'] != column_family]
             table.save_to_json(os.path.join(
                 self.data_dir, table_name + '.json'))
-            print(f"La columna familia '{
-                  column_family}' ha sido eliminada de la tabla '{table_name}'.")
+            print(f"La columna familia '{column_family}' ha sido eliminada de la tabla '{table_name}'.")
 
         else:
             print(f"Acción '{action}' no reconocida.")
