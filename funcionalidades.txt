@@ -10,7 +10,7 @@ Esta clase se encargará del manejo de las operaciones relacionadas con una tabl
 Funciones DDL:
 
 create: Crear una nueva tabla. - Jose
-alter: Modificar la estructura de la tabla (por ejemplo, agregar o eliminar familias de columnas). - Jose 
+alter: Modificar la estructura de la tabla (por ejemplo, agregar o eliminar familias de columnas). - Jose ✅ 
 drop: Eliminar una tabla existente. - David ✅
 describe: Mostrar la información detallada de una tabla (nombre, familias de columnas, etc.). ✅
 
@@ -19,9 +19,9 @@ Funciones DML:
 put: Insertar o actualizar datos en una fila de la tabla. ✅
 get: Obtener los datos de una fila específica o de una columna en particular. ✅
 scan: Escanear y mostrar los datos de la tabla dentro de un rango específico de filas. ✅
-delete: Eliminar una fila o una columna específica de la tabla. - David
-deleteAll: Eliminar todas las filas de la tabla. - David
-truncate: Truncar (vaciar) una tabla, lo cual implica deshabilitar, eliminar y recrear la tabla. - Linda
+delete: Eliminar una fila o una columna específica de la tabla. - David ✅
+deleteAll: Eliminar todas las filas de la tabla. - David ✅
+truncate: Truncar (vaciar) una tabla, lo cual implica deshabilitar, eliminar y recrear la tabla. - Linda ✅
 
 
 Clase HFileManager

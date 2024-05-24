@@ -1,5 +1,5 @@
 # Get fila especifica
-python main.py get --tabla usuarios --row_key user1
+python main.py get usuarios user1
 
 # Escanear toda la tabla
 python main.py scan --tabla usuarios
@@ -17,10 +17,10 @@ python main.py scan --tabla usuarios --start_row user1 --stop_row user3
 python main.py list
 
 # Count rows
-python main.py count --tabla usuarios
+python main.py count usuarios
 
 # Describe
-python main.py describe --tabla usuarios 
+python main.py describe usuarios 
 
 # Put 
 python main.py put usuarios user2 info_personal:nombre "Juan Esteban"
@@ -42,8 +42,11 @@ python main.py drop usuarios
 
 #alter_table
 #Para añadir
-python main.py alter --tabla usuarios --column_family testfamily --add
+python main.py alter usuarios testfamily --add
 #Para modificar
 python main.py alter --tabla usuarios --column_family testfamily --modify max_versions 5 ttl 1209600
 #Para borrar
 python main.py alter --tabla usuarios --column_family testfamily  --delete
+
+Truncate 
+python main.py truncate 'usuarios'
