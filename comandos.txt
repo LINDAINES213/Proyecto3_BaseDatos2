@@ -2,16 +2,16 @@
 python main.py get usuarios user1
 
 # Escanear toda la tabla
-python main.py scan --tabla usuarios
+python main.py scan usuarios
 
 # Escanear desde una fila específica
-python main.py scan --tabla usuarios --start_row user2
+python main.py scan usuarios --start_row user2
 
 # Escanear hasta una fila específica
-python main.py scan --tabla usuarios --stop_row user2
+python main.py scan usuarios --stop_row user2
 
 # Escanear un rango de filas
-python main.py scan --tabla usuarios --start_row user1 --stop_row user3
+python main.py scan usuarios --start_row user1 --stop_row user3
 
 # Listar tablas
 python main.py list
@@ -44,9 +44,9 @@ python main.py drop usuarios
 #Para añadir
 python main.py alter usuarios testfamily --add
 #Para modificar
-python main.py alter --tabla usuarios --column_family testfamily --modify max_versions 5 ttl 1209600
+python main.py alter usuarios testfamily --modify max_versions 5 ttl 1209600
 #Para borrar
-python main.py alter --tabla usuarios --column_family testfamily  --delete
+python main.py alter usuarios testfamily --delete
 
 #Truncate 
 python main.py truncate 'usuarios'

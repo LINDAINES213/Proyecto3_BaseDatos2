@@ -2,34 +2,36 @@
   "table_name": "usuarios",
   "column_families": [
     {
-        "name": "info_personal",
-        "max_versions": 3,
-        "compression": "NONE",
-        "in_memory": false,
-        "bloom_filter": "ROW",
-        "ttl": 604800, 
-        "blocksize": 65536, 
-        "blockcache": true  
+      "name": "info_personal",
+      "max_versions": 3,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 604800,
+      "blocksize": 65536,
+      "blockcache": true
     },
     {
-        "name": "contacto",
-        "max_versions": 3,
-        "compression": "NONE",
-        "in_memory": false,
-        "bloom_filter": "ROW",
-        "ttl": 259200, 
-        "blocksize": 32768,
-        "blockcache": false  
+      "name": "contacto",
+      "max_versions": 3,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 259200,
+      "blocksize": 32768,
+      "blockcache": false
+    },
+    {
+      "name": "testfamily",
+      "max_versions": 6,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 604800,
+      "blocksize": 65536,
+      "blockcache": true
     }
-],
-  "stats": {
-    "total_rows": 2,
-    "total_columns": 4,
-    "max_column_family_size": {
-        "info_personal": 2,
-        "contacto": 2
-    }
-},
+  ],
   "data": [
     {
       "row_key": "user1",
@@ -71,6 +73,7 @@
           "family": "info_personal",
           "column": "nombre",
           "timestamps": [
+            "Juan Esteban",
             "Maria Gonzalez"
           ]
         },

@@ -4,13 +4,57 @@ from HFileManager import HFileManager
 import sys
 import json
 
+valid_keys = {
+    "name",
+    "max_versions",
+    "compression",
+    "in_memory",
+    "bloom_filter",
+    "ttl",
+    "blocksize",
+    "blockcache"
+}
+
+def convert_value(value):
+    # Primero, intenta convertir a booleano
+    if value.lower() in ('true', 'false'):
+        return value.lower() == 'true'
+    
+    # Intenta convertir a entero
+    try:
+        return int(value)
+    except ValueError:
+        pass
+    
+    # Intenta convertir a flotante
+    try:
+        return float(value)
+    except ValueError:
+        pass
+    
+    # Si no se puede convertir, devuelve el valor original
+    return value
+
+def create_and_convert_dict(pairs, parser):
+    # Crear el diccionario con los pares
+    details = dict(zip(pairs[::2], pairs[1::2]))
+    
+    # Convertir los valores que sean texto pero pueden ser números o booleanos
+    for key, value in details.items():
+        details[key] = convert_value(value)
+    
+    for key in details:
+        if key not in valid_keys:
+            parser.error(f"La clave '{key}' no es válida.")
+
+    return details
 
 def main():
     # Crear el parser de argumentos
     parser = argparse.ArgumentParser(description='Simulador de HBase')
     parser.add_argument('comando', type=str, help='Comando a ejecutar')
     parser.add_argument('--tabla', type=str, help='Nombre de la tabla')
-    parser.add_argument('tabla', type=str, help='Nombre de la tabla')
+    #parser.add_argument('tabla', type=str, help='Nombre de la tabla')
     parser.add_argument('--archivo', type=str, help='Ruta del archivo JSON')
     parser.add_argument('--row_key', type=str, help='Clave de la fila')
     parser.add_argument('--column_family', type=str,
@@ -24,7 +68,7 @@ def main():
                         help='Clave de la fila de fin (exclusiva)')
 
     # Argumentos específicos para el comando 'put'
-    '''parser.add_argument('put_args', nargs='*',
+    parser.add_argument('put_args', nargs='*',
                         help='Argumentos para el comando put')
     parser.add_argument('--add', action='store_true',
                         help='Agregar una nueva column family')
@@ -32,11 +76,9 @@ def main():
                         help='Argumentos de modificación para la columna familia')
 
     parser.add_argument('--delete', action='store_true',
-                        help='Eliminar una column family existente')'''
+                        help='Eliminar una column family existente')
     # Analizar los argumentos
     args = parser.parse_args()
-
-    print(args)
 
     file_manager = HFileManager('./datos',)
 
@@ -56,12 +98,12 @@ def main():
             print(output)
 
     elif args.comando == 'scan':
-        if not args.tabla:
+        if not args.put_args[0]:
             parser.error('Debe proporcionar el nombre de la tabla')
 
         # Asume que las familias de columnas se cargan desde el archivo JSON
-        tabla = Table(args.tabla, [])
-        tabla.load_from_json(args.tabla)
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
         if tabla.disabled:
             print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
         else:
@@ -178,22 +220,22 @@ def main():
         result = tabla.deleteAll(args.row_key)
         print(result)
 
-    if args.comando == 'alter':
-        if not args.tabla or not args.column_family:
+    elif args.comando == 'alter':
+        if not args.put_args[0] or not args.put_args[1]:
             parser.error(
                 'Debe proporcionar los argumentos: <tabla> <column_family>')
 
-        table = file_manager.load_table(args.tabla)
+        table = file_manager.load_table(args.put_args[0])
         if not table:
-            parser.error(f"La tabla '{args.tabla}' no existe.")
+            parser.error(f"La tabla '{args.put_args[0]}' no existe.")
 
         if args.add:
             existing_families = [cf['name'] for cf in table.column_families]
-            if args.column_family in existing_families:
-                print(f"La columna familia '{args.column_family}' ya existe en la tabla '{args.tabla}'.")
+            if args.put_args[1] in existing_families:
+                print(f"La columna familia '{args.put_args[1]}' ya existe en la tabla '{args.put_args[0]}'.")
             else:
                 new_family = {
-                    "name": args.column_family,
+                    "name": args.put_args[1],
                     "max_versions": 3,
                     "compression": "NONE",
                     "in_memory": False,
@@ -203,24 +245,24 @@ def main():
                     "blockcache": True
                 }
                 table.column_families.append(new_family)
-                table.save_to_json(args.tabla)
-                print(f"La columna familia '{args.column_family}' ha sido agregada a la tabla '{args.tabla}'.")
+                table.save_to_json(args.put_args[0])
+                print(f"La columna familia '{args.put_args[1]}' ha sido agregada a la tabla '{args.put_args[0]}'.")
 
         elif args.modify:
-            details = dict(zip(args.modify[::2], args.modify[1::2]))
+            details = create_and_convert_dict(args.modify, parser)
             for family in table.column_families:
-                if family['name'] == args.column_family:
+                if family['name'] == args.put_args[1]:
                     family.update(details)
-                    table.save_to_json(args.tabla)
-                    print(f"La columna familia '{args.column_family}' ha sido modificada en la tabla '{args.tabla}'.")
+                    table.save_to_json(args.put_args[0])
+                    print(f"La columna familia '{args.put_args[1]}' ha sido modificada en la tabla '{args.put_args[0]}'.")
                     return
-            print(f"La columna familia '{args.column_family}' no se encontró en la tabla '{args.tabla}'.")
+            print(f"La columna familia '{args.put_args[1]}' no se encontró en la tabla '{args.put_args[0]}'.")
 
         elif args.delete:
             table.column_families = [
-                cf for cf in table.column_families if cf['name'] != args.column_family]
-            table.save_to_json(args.tabla)
-            print(f"La columna familia '{args.column_family}' ha sido eliminada de la tabla '{args.tabla}'.")
+                cf for cf in table.column_families if cf['name'] != args.put_args[1]]
+            table.save_to_json(args.put_args[0])
+            print(f"La columna familia '{args.put_args[1]}' ha sido eliminada de la tabla '{args.put_args[0]}'.")
 
         else:
             print("Debe especificar una acción: --add, --modify <detalles> o --delete.")
