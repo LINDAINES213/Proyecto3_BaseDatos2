@@ -197,12 +197,12 @@ def main():
         print(result)
 
     elif args.comando == 'deleteAll':
-        if not args.tabla or not args.row_key:
+        if not args.put_args[0] or not args.put_args[1]:
             parser.error('Debe proporcionar el nombre de la tabla y la clave de la fila')
 
-        tabla = Table(args.tabla, [])
-        tabla.load_from_json(args.tabla)
-        result = tabla.deleteAll(args.row_key)
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        result = tabla.deleteAll(args.put_args[1])
         print(result)
 
     elif args.comando == 'alter':
