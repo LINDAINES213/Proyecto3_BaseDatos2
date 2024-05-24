@@ -1,5 +1,5 @@
 import argparse
-from tables import Table
+from tables import Table, convert_value
 from HFileManager import HFileManager
 import sys
 import json
@@ -14,26 +14,6 @@ valid_keys = {
     "blocksize",
     "blockcache"
 }
-
-def convert_value(value):
-    # Primero, intenta convertir a booleano
-    if value.lower() in ('true', 'false'):
-        return value.lower() == 'true'
-    
-    # Intenta convertir a entero
-    try:
-        return int(value)
-    except ValueError:
-        pass
-    
-    # Intenta convertir a flotante
-    try:
-        return float(value)
-    except ValueError:
-        pass
-    
-    # Si no se puede convertir, devuelve el valor original
-    return value
 
 def create_and_convert_dict(pairs, parser):
     # Crear el diccionario con los pares
@@ -203,12 +183,17 @@ def main():
         print(result)
 
     elif args.comando == 'delete':
-        if not args.tabla or not args.row_key:
+        if not args.put_args[0] or not args.put_args[1]:
             parser.error('Debe proporcionar el nombre de la tabla y la clave de la fila')
 
-        tabla = Table(args.tabla, [])
-        tabla.load_from_json(args.tabla)
-        result = tabla.delete(args.row_key, args.column, args.timestamp)
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
+        if len(args.put_args)>3:
+            result = tabla.delete(args.put_args[1], args.put_args[2], args.put_args[3])
+        elif len(args.put_args)>2:
+            result = tabla.delete(args.put_args[1], args.put_args[2])
+        else:
+            result = tabla.delete(args.put_args[1])
         print(result)
 
     elif args.comando == 'deleteAll':

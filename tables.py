@@ -5,6 +5,25 @@ import os
 import sys
 from tabulate import tabulate
 
+def convert_value(value):
+    # Primero, intenta convertir a booleano
+    if value.lower() in ('true', 'false'):
+        return value.lower() == 'true'
+    
+    # Intenta convertir a entero
+    try:
+        return int(value)
+    except ValueError:
+        pass
+    
+    # Intenta convertir a flotante
+    try:
+        return float(value)
+    except ValueError:
+        pass
+    
+    # Si no se puede convertir, devuelve el valor original
+    return value
 
 class Table:
     def __init__(self, name, column_families):
@@ -70,7 +89,6 @@ class Table:
             for col_key, value in row.items():
                 if col_key != 'row_key':
                     if not isinstance(value, list) and not isinstance(value, str):
-                        print(value)
                         if math.isnan(value):
                             value = 'NaN'
                     family, col_name = col_key.split(':')
@@ -246,12 +264,12 @@ class Table:
 
     def delete(self, row_key, col_family_col_name=None, timestamp=None):
         """
-        Elimina una celda específica o una columna completa de una fila en la tabla.
+        Elimina una celda específica, una columna completa o una fila completa de la tabla.
 
         Args:
             row_key (str): La clave de la fila a eliminar.
             col_family_col_name (str, optional): El nombre de la columna en el formato 'familia:columna'. Si no se proporciona, se eliminará la fila completa.
-            timestamp (str, optional): El timestamp de la celda a eliminar. Si no se proporciona, se eliminará la columna completa.
+            timestamp (int, optional): El timestamp de la celda a eliminar. Si no se proporciona, se eliminará la columna completa.
         """
         if row_key not in self.data.index:
             return f"La fila con clave '{row_key}' no existe en la tabla."
@@ -265,13 +283,19 @@ class Table:
             if col_key not in self.data.columns:
                 return f"La columna '{col_family_col_name}' no existe en la fila '{row_key}'."
 
-            if timestamp:
-                if timestamp in self.data.at[row_key, col_key]:
-                    self.data.at[row_key, col_key].remove(timestamp)
-                    if not self.data.at[row_key, col_key]:
-                        self.data.at[row_key, col_key] = float('nan')
+            if timestamp is not None:
+                # Asegurarse de que la columna contiene una lista de timestamps
+                timestamp = convert_value(timestamp)
+                if isinstance(self.data.at[row_key, col_key], list):
+                    if timestamp in self.data.at[row_key, col_key]:
+                        self.data.at[row_key, col_key].remove(timestamp)
+                        # Eliminar la columna si la lista está vacía
+                        if not self.data.at[row_key, col_key]:
+                            self.data.at[row_key, col_key] = float('nan')
+                    else:
+                        return f"El timestamp '{timestamp}' no existe en la columna '{col_family_col_name}' de la fila '{row_key}'."
                 else:
-                    return f"El timestamp '{timestamp}' no existe en la columna '{col_family_col_name}' de la fila '{row_key}'."
+                    return f"La columna '{col_family_col_name}' no contiene múltiples versiones."
             else:
                 self.data.at[row_key, col_key] = float('nan')
         else:
