@@ -268,12 +268,12 @@ def main():
             print("Debe especificar una acción: --add, --modify <detalles> o --delete.")
     
     elif args.comando == 'truncate':
-        tabla = Table(args.tabla, [])
-
-        if not args.tabla:
+        if not args.put_args[0]:
             parser.error('Debe proporcionar el nombre de la tabla')
 
-        tabla.load_from_json(args.tabla)
+        tabla = Table(args.put_args[0], [])
+
+        tabla.load_from_json(args.put_args[0])
         result = tabla.truncate()
         print(result)
 

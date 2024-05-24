@@ -331,4 +331,4 @@ class Table:
         self.data = pd.DataFrame(columns=[f"{cf['name']}:{col}" for cf in column_families for col in ['column']])
         self.save_to_json(self.name)
 
-        return f"\nTodos los datos de la tabla '{self.name}' han sido eliminados y la tabla ha sido recreada.\n"
+        return f"Todos los datos de la tabla '{self.name}' han sido eliminados y la tabla ha sido recreada."

@@ -23,7 +23,7 @@
     },
     {
       "name": "testfamily",
-      "max_versions": 6,
+      "max_versions": 3,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
@@ -73,7 +73,6 @@
           "family": "info_personal",
           "column": "nombre",
           "timestamps": [
-            "Juan Esteban",
             "Maria Gonzalez"
           ]
         },
