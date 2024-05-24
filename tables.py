@@ -244,44 +244,56 @@ class Table:
         self.column_families = []
         return f"La tabla '{self.name}' ha sido eliminada en memoria."
 
-    def delete(self, row_key=None, column_family=None, column=None):
+    def delete(self, row_key, col_family_col_name=None, timestamp=None):
         """
-        Elimina una fila específica o una columna específica de la tabla.
+        Elimina una celda específica o una columna completa de una fila en la tabla.
 
         Args:
-            row_key (str, optional): La clave de la fila a eliminar. Si no se proporciona, se eliminará la columna especificada.
-            column_family (str, optional): La familia de columnas de la columna a eliminar. Requerido si se proporciona 'column'.
-            column (str, optional): El nombre de la columna a eliminar. Requerido si se proporciona 'column_family'.
+            row_key (str): La clave de la fila a eliminar.
+            col_family_col_name (str, optional): El nombre de la columna en el formato 'familia:columna'. Si no se proporciona, se eliminará la fila completa.
+            timestamp (str, optional): El timestamp de la celda a eliminar. Si no se proporciona, se eliminará la columna completa.
         """
-        if row_key is not None:
-            if row_key not in self.data.index:
-                return f"La fila con clave '{row_key}' no existe en la tabla."
-            else:
-                self.data.drop(index=row_key, inplace=True)
-                self.save_to_json(self.name)
-                return f"La fila con clave '{row_key}' ha sido eliminada de la tabla."
+        if row_key not in self.data.index:
+            return f"La fila con clave '{row_key}' no existe en la tabla."
 
-        elif column_family is not None and column is not None:
-            col_key = f"{column_family}:{column}"
+        if col_family_col_name:
+            if ':' not in col_family_col_name:
+                raise ValueError("El nombre de la columna debe estar en el formato 'familia:columna'.")
+            family, col_name = col_family_col_name.split(':')
+            col_key = f"{family}:{col_name}"
+
             if col_key not in self.data.columns:
-                return f"La columna '{column_family}:{column}' no existe en la tabla."
-            else:
-                self.data.drop(columns=col_key, inplace=True)
-                self.save_to_json(self.name)
-                return f"La columna '{column_family}:{column}' ha sido eliminada de la tabla."
-        else:
-            return "Debe proporcionar la clave de la fila o la combinación de familia de columnas y columna para eliminar."
+                return f"La columna '{col_family_col_name}' no existe en la fila '{row_key}'."
 
-    def deleteAll(self):
-        """
-        Elimina todas las filas de la tabla.
-        """
-        if self.data.empty:
-            return "La tabla está vacía, no hay filas para eliminar."
+            if timestamp:
+                if timestamp in self.data.at[row_key, col_key]:
+                    self.data.at[row_key, col_key].remove(timestamp)
+                    if not self.data.at[row_key, col_key]:
+                        self.data.at[row_key, col_key] = float('nan')
+                else:
+                    return f"El timestamp '{timestamp}' no existe en la columna '{col_family_col_name}' de la fila '{row_key}'."
+            else:
+                self.data.at[row_key, col_key] = float('nan')
         else:
-            self.data.drop(self.data.index, inplace=True)
-            self.save_to_json(self.name)
-            return "Todas las filas han sido eliminadas de la tabla."
+            self.data.drop(index=row_key, inplace=True)
+
+        self.save_to_json(self.name)
+        return f"Eliminación realizada correctamente."
+
+    def deleteAll(self, row_key):
+        """
+        Elimina todas las celdas en una fila específica de la tabla.
+
+        Args:
+            row_key (str): La clave de la fila a eliminar.
+        """
+        if row_key not in self.data.index:
+            return f"La fila con clave '{row_key}' no existe en la tabla."
+
+        self.data.drop(index=row_key, inplace=True)
+        self.save_to_json(self.name)
+        return f"Toda la fila con clave '{row_key}' ha sido eliminada de la tabla."
+
 
     def drop_table(self, table_name):
         """

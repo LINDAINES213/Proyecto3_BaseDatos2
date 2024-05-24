@@ -158,25 +158,22 @@ def main():
         print(result)
 
     elif args.comando == 'delete':
-        if not args.tabla:
-            parser.error('Debe proporcionar el nombre de la tabla')
+        if not args.tabla or not args.row_key:
+            parser.error('Debe proporcionar el nombre de la tabla y la clave de la fila')
 
         tabla = Table(args.tabla, [])
         tabla.load_from_json(args.tabla)
-        if args.row_key:
-            result = tabla.delete(row_key=args.row_key)
-            print(result)
-        elif args.column_family and args.column:
-            result = tabla.delete(
-                column_family=args.column_family, column=args.column)
-            print(result)
-        else:
-            parser.error(
-                'Debe proporcionar la clave de la fila o la combinación de familia de columnas y columna para eliminar')
+        result = tabla.delete(args.row_key, args.column, args.timestamp)
+        print(result)
 
     elif args.comando == 'deleteAll':
-        if not args.tabla:
-            parser.error('Debe proporcionar el nombre de la tabla')
+        if not args.tabla or not args.row_key:
+            parser.error('Debe proporcionar el nombre de la tabla y la clave de la fila')
+
+        tabla = Table(args.tabla, [])
+        tabla.load_from_json(args.tabla)
+        result = tabla.deleteAll(args.row_key)
+        print(result)
 
     if args.comando == 'alter':
         if not args.tabla or not args.column_family:
