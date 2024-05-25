@@ -1,3 +1,4 @@
+import time
 import pandas as pd
 import json
 import math
@@ -342,17 +343,19 @@ class Table:
         """
         # Deshabilitar la tabla
         # Deshabilitar la tabla
+        inicio = time.time()
+        print("Disabling Table...")
         self.disable()
-
         # Guardar la estructura de la tabla
         column_families = self.column_families
 
         # Eliminar la tabla
+        print("Truncating Table...")
         self.drop()
 
         # Volver a crear la tabla con la misma estructura
         self.column_families = column_families
         self.data = pd.DataFrame(columns=[f"{cf['name']}:{col}" for cf in column_families for col in ['column']])
         self.save_to_json(self.name)
-
-        return f"Todos los datos de la tabla '{self.name}' han sido eliminados y la tabla ha sido recreada."
+        fin = time.time()
+        return f"Todos los datos de la tabla '{self.name}' han sido eliminados y la tabla ha sido recreada en {round(fin - inicio, 3)} seg"
