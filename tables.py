@@ -350,10 +350,11 @@ class Table:
         column_families = self.column_families
 
         # Eliminar la tabla
-        print("Truncating Table...")
+        print("Dropping Table...")
         self.drop()
 
         # Volver a crear la tabla con la misma estructura
+        print("Recreating Table...")
         self.column_families = column_families
         self.data = pd.DataFrame(columns=[f"{cf['name']}:{col}" for cf in column_families for col in ['column']])
         self.save_to_json(self.name)
