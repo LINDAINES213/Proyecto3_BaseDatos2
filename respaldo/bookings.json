@@ -1,0 +1,568 @@
+{
+    "table_name": "bookings",
+    "column_families": [
+        {
+            "name": "details",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW",
+            "ttl": 604800,
+            "blocksize": 65536,
+            "blockcache": true
+        },
+        {
+            "name": "payment",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW",
+            "ttl": 259200,
+            "blocksize": 32768,
+            "blockcache": false
+        }
+    ],
+    "data": [
+        {
+            "row_key": "BKG10",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL290"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX1567"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-03-17"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "2D"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Credit Card"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        95.48
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG11",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL1207"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX1841"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-03-04"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "14B"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Debit Card"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        12.26
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG12",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL830"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX942"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-02-08"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "26A"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Credit Card"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        71.8
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG13",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL1984"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX568"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-01-31"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "27E"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Debit Card"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        16.39
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG14",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL623"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX561"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-05-17"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "3A"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Paypal"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        59.95
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG15",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL318"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX381"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-05-21"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "24C"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Credit Card"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        41.58
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG16",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL1330"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX1342"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-05-22"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "24E"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Paypal"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        40.15
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG17",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL763"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX1513"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-04-26"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "26F"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Debit Card"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        75.9
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG18",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL675"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX1971"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-03-27"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "19F"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Paypal"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        22.38
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BKG19",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "flight_id",
+                    "timestamps": [
+                        "FL550"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "passenger_id",
+                    "timestamps": [
+                        "PAX1798"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "booking_date",
+                    "timestamps": [
+                        "2024-02-18"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "seat_number",
+                    "timestamps": [
+                        "1F"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "payment_method",
+                    "timestamps": [
+                        "Paypal"
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "amount",
+                    "timestamps": [
+                        99.01
+                    ]
+                },
+                {
+                    "family": "payment",
+                    "column": "currency",
+                    "timestamps": [
+                        "USD"
+                    ]
+                }
+            ]
+        }
+    ],
+    "disabled": false
+}

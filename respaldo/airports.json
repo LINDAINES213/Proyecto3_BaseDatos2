@@ -1,0 +1,348 @@
+{
+    "table_name": "airports",
+    "column_families": [
+        {
+            "name": "info",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW",
+            "ttl": 604800,
+            "blocksize": 65536,
+            "blockcache": true
+        }
+    ],
+    "data": [
+        {
+            "row_key": "DCA",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Miller, Johns and Rhodes"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "New Jessica"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "Bolivia"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "Asia/Gaza"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "GTF",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Hunter LLC"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "Hoview"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "Afghanistan"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "Africa/Tripoli"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "MIA",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Sanchez and Sons"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "East James"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "Saint Vincent and the Grenadines"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "Africa/Gaborone"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "CTG",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Love, Taylor and Mcpherson"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "Markmouth"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "Saint Lucia"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "Atlantic/Canary"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "GYE",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Reynolds, Woods and Garcia"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "South Matthewfort"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "India"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "Pacific/Tongatapu"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BWI",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Sellers Inc"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "Justinfurt"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "Taiwan"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "Atlantic/Reykjavik"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "MQT",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Campbell, Tucker and West"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "Ashleyview"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "Malawi"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "Africa/Casablanca"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "ZIH",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Sanchez-Davis"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "North Rachel"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "Japan"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "America/Panama"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "BWI",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Robinson-Richardson"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "South Josephside"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "United States of America"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "America/Thunder_Bay"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "LAX",
+            "columns": [
+                {
+                    "family": "info",
+                    "column": "name",
+                    "timestamps": [
+                        "Jackson-Guerrero"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "city",
+                    "timestamps": [
+                        "Jesuston"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "country",
+                    "timestamps": [
+                        "Suriname"
+                    ]
+                },
+                {
+                    "family": "info",
+                    "column": "timezone",
+                    "timestamps": [
+                        "Asia/Shanghai"
+                    ]
+                }
+            ]
+        }
+    ],
+    "disabled": false
+}

@@ -1,0 +1,498 @@
+{
+    "table_name": "passengers",
+    "column_families": [
+        {
+            "name": "personal_info",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW",
+            "ttl": 604800,
+            "blocksize": 65536,
+            "blockcache": true
+        },
+        {
+            "name": "travel_history",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW",
+            "ttl": 259200,
+            "blocksize": 32768,
+            "blockcache": false
+        }
+    ],
+    "data": [
+        {
+            "row_key": "PAX10",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "William"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Fox"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "jessicabaker@example.com"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "(290)712-0445"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL682"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Platinum"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX11",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "Carrie"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Huff"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "joseph83@example.com"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "001-614-343-4166x018"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL1606"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Platinum"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX12",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "Sue"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Johnson"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "knorris@example.org"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "+1-861-368-8995"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL150"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Gold"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX13",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "Cynthia"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Owens"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "ismith@example.org"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "626-813-1536"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL1523"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Gold"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX14",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "Kyle"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Ortiz"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "spencerdeanna@example.net"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "+1-394-384-9401x002"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL1655"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Silver"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX15",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "Lauren"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Thomas"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "mendozabriana@example.com"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "(281)423-6723"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL476"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Gold"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX16",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "Joshua"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Garcia"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "erikaanderson@example.net"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "312.870.4897x6532"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL99"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Gold"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX17",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "Cheryl"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Bennett"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "michellecox@example.com"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "777.964.0494x515"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL18"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Platinum"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX18",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "Alyssa"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Sandoval"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "dennis91@example.org"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "433.301.7878"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL1519"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Platinum"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "PAX19",
+            "columns": [
+                {
+                    "family": "personal_info",
+                    "column": "first_name",
+                    "timestamps": [
+                        "David"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "last_name",
+                    "timestamps": [
+                        "Neal"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "email",
+                    "timestamps": [
+                        "njohnson@example.com"
+                    ]
+                },
+                {
+                    "family": "personal_info",
+                    "column": "phone",
+                    "timestamps": [
+                        "(913)522-0925x6224"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "last_flight",
+                    "timestamps": [
+                        "FL260"
+                    ]
+                },
+                {
+                    "family": "travel_history",
+                    "column": "frequent_flyer_status",
+                    "timestamps": [
+                        "Gold"
+                    ]
+                }
+            ]
+        }
+    ],
+    "disabled": false
+}

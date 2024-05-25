@@ -1,0 +1,498 @@
+{
+    "table_name": "aircrafts",
+    "column_families": [
+        {
+            "name": "details",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW",
+            "ttl": 604800,
+            "blocksize": 65536,
+            "blockcache": true
+        },
+        {
+            "name": "maintenance",
+            "max_versions": 3,
+            "compression": "NONE",
+            "in_memory": false,
+            "bloom_filter": "ROW",
+            "ttl": 259200,
+            "blocksize": 32768,
+            "blockcache": false
+        }
+    ],
+    "data": [
+        {
+            "row_key": "AC10",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Airbus A320"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Boeing"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        159
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "4337 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-02-08"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-02-11"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC11",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Boeing 737"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Boeing"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        160
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "666 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-03-15"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-01-09"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC12",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Boeing 777"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Boeing"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        169
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "3945 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-05-03"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-04-17"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC13",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Boeing 737"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Boeing"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        232
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "3980 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-04-20"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-02-20"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC14",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Boeing 737"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Boeing"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        158
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "24 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-04-14"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-04-27"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC15",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Boeing 737"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Boeing"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        155
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "1329 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-01-16"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-05-01"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC16",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Airbus A320"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Airbus"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        225
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "3134 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-01-14"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-04-29"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC17",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Boeing 777"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Airbus"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        226
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "1933 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-04-13"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-05-16"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC18",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Airbus A320"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Boeing"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        288
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "1950 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-02-20"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-01-14"
+                    ]
+                }
+            ]
+        },
+        {
+            "row_key": "AC19",
+            "columns": [
+                {
+                    "family": "details",
+                    "column": "model",
+                    "timestamps": [
+                        "Boeing 777"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "manufacturer",
+                    "timestamps": [
+                        "Boeing"
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "capacity",
+                    "timestamps": [
+                        195
+                    ]
+                },
+                {
+                    "family": "details",
+                    "column": "range",
+                    "timestamps": [
+                        "3025 miles"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "last_maintenance_date",
+                    "timestamps": [
+                        "2024-05-11"
+                    ]
+                },
+                {
+                    "family": "maintenance",
+                    "column": "next_maintenance_date",
+                    "timestamps": [
+                        "2024-05-01"
+                    ]
+                }
+            ]
+        }
+    ],
+    "disabled": false
+}
