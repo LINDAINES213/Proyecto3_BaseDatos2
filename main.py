@@ -3,7 +3,7 @@ from tables import Table, convert_value
 from HFileManager import HFileManager
 import sys
 import json
-
+import random
 valid_keys = {
     "name",
     "max_versions",
@@ -15,26 +15,28 @@ valid_keys = {
     "blockcache"
 }
 
+
 def create_and_convert_dict(pairs, parser):
     # Crear el diccionario con los pares
     details = dict(zip(pairs[::2], pairs[1::2]))
-    
+
     # Convertir los valores que sean texto pero pueden ser números o booleanos
     for key, value in details.items():
         details[key] = convert_value(value)
-    
+
     for key in details:
         if key not in valid_keys:
             parser.error(f"La clave '{key}' no es válida.")
 
     return details
 
+
 def main():
     # Crear el parser de argumentos
     parser = argparse.ArgumentParser(description='Simulador de HBase')
     parser.add_argument('comando', type=str, help='Comando a ejecutar')
     parser.add_argument('--tabla', type=str, help='Nombre de la tabla')
-    #parser.add_argument('tabla', type=str, help='Nombre de la tabla')
+    # parser.add_argument('tabla', type=str, help='Nombre de la tabla')
     parser.add_argument('--archivo', type=str, help='Ruta del archivo JSON')
     parser.add_argument('--row_key', type=str, help='Clave de la fila')
     parser.add_argument('--column_family', type=str,
@@ -57,6 +59,8 @@ def main():
 
     parser.add_argument('--delete', action='store_true',
                         help='Eliminar una column family existente')
+    parser.add_argument('--column_families', nargs='+',
+                        help='Familias de columnas')
     # Analizar los argumentos
     args = parser.parse_args()
 
@@ -94,7 +98,8 @@ def main():
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
         if tabla.disabled:
-            print(f"La tabla '{args.put_args[0]}' ya se encuentra deshabilitada.")
+            print(f"La tabla '{args.put_args[0]
+                               }' ya se encuentra deshabilitada.")
         else:
             tabla.disable()
             print(f"La tabla '{args.put_args[0]}' ha sido deshabilitada.")
@@ -106,7 +111,8 @@ def main():
             tabla.enable()
             print(f"La tabla '{args.put_args[0]}' ha sido habilitada.")
         else:
-            print(f"La tabla '{args.put_args[0]}' ya se encuentra deshabilitada.")
+            print(f"La tabla '{args.put_args[0]
+                               }' ya se encuentra deshabilitada.")
 
     elif args.comando == 'list':
         tables = file_manager.list()
@@ -184,13 +190,15 @@ def main():
 
     elif args.comando == 'delete':
         if not args.put_args[0] or not args.put_args[1]:
-            parser.error('Debe proporcionar el nombre de la tabla y la clave de la fila')
+            parser.error(
+                'Debe proporcionar el nombre de la tabla y la clave de la fila')
 
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
-        if len(args.put_args)>3:
-            result = tabla.delete(args.put_args[1], args.put_args[2], args.put_args[3])
-        elif len(args.put_args)>2:
+        if len(args.put_args) > 3:
+            result = tabla.delete(
+                args.put_args[1], args.put_args[2], args.put_args[3])
+        elif len(args.put_args) > 2:
             result = tabla.delete(args.put_args[1], args.put_args[2])
         else:
             result = tabla.delete(args.put_args[1])
@@ -198,7 +206,8 @@ def main():
 
     elif args.comando == 'deleteAll':
         if not args.put_args[0] or not args.put_args[1]:
-            parser.error('Debe proporcionar el nombre de la tabla y la clave de la fila')
+            parser.error(
+                'Debe proporcionar el nombre de la tabla y la clave de la fila')
 
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
@@ -217,7 +226,8 @@ def main():
         if args.add:
             existing_families = [cf['name'] for cf in table.column_families]
             if args.put_args[1] in existing_families:
-                print(f"La columna familia '{args.put_args[1]}' ya existe en la tabla '{args.put_args[0]}'.")
+                print(f"La columna familia '{
+                      args.put_args[1]}' ya existe en la tabla '{args.put_args[0]}'.")
             else:
                 new_family = {
                     "name": args.put_args[1],
@@ -231,7 +241,8 @@ def main():
                 }
                 table.column_families.append(new_family)
                 table.save_to_json(args.put_args[0])
-                print(f"La columna familia '{args.put_args[1]}' ha sido agregada a la tabla '{args.put_args[0]}'.")
+                print(f"La columna familia '{
+                      args.put_args[1]}' ha sido agregada a la tabla '{args.put_args[0]}'.")
 
         elif args.modify:
             details = create_and_convert_dict(args.modify, parser)
@@ -239,19 +250,22 @@ def main():
                 if family['name'] == args.put_args[1]:
                     family.update(details)
                     table.save_to_json(args.put_args[0])
-                    print(f"La columna familia '{args.put_args[1]}' ha sido modificada en la tabla '{args.put_args[0]}'.")
+                    print(f"La columna familia '{
+                          args.put_args[1]}' ha sido modificada en la tabla '{args.put_args[0]}'.")
                     return
-            print(f"La columna familia '{args.put_args[1]}' no se encontró en la tabla '{args.put_args[0]}'.")
+            print(f"La columna familia '{
+                  args.put_args[1]}' no se encontró en la tabla '{args.put_args[0]}'.")
 
         elif args.delete:
             table.column_families = [
                 cf for cf in table.column_families if cf['name'] != args.put_args[1]]
             table.save_to_json(args.put_args[0])
-            print(f"La columna familia '{args.put_args[1]}' ha sido eliminada de la tabla '{args.put_args[0]}'.")
+            print(f"La columna familia '{
+                  args.put_args[1]}' ha sido eliminada de la tabla '{args.put_args[0]}'.")
 
         else:
             print("Debe especificar una acción: --add, --modify <detalles> o --delete.")
-    
+
     elif args.comando == 'truncate':
         if not args.put_args[0]:
             parser.error('Debe proporcionar el nombre de la tabla')
@@ -262,6 +276,45 @@ def main():
         result = tabla.truncate()
         print(result)
 
+    if args.comando == 'create':
+        if not args.tabla or not args.column_families:
+            parser.error(
+                'Debe proporcionar el nombre de la tabla y al menos una familia de columnas.')
+          # Crear la tabla con las familias de columnas especificadas
+        column_families = [{
+            'name': name,
+            'max_versions': random.randint(0, 10),
+            'compression': 'NONE',
+            'in_memory': False,
+            'bloom_filter': 'ROW',
+            'ttl': random.randint(3600, 604800),
+            'blocksize': random.randint(1024, 65536),
+            'blockcache': False
+        } for name in args.column_families]
+        data = []
+        for i in range(1, 6):  # Generar datos para 5 filas de ejemplo
+            row_key = f"row_{i}"
+            columns = []
+            for family in args.column_families:
+                # Generar datos de ejemplo para cada columna de la familia
+                column_data = {
+                    "family": family,
+                    "column": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
+                    "timestamps": [f"Ejemplo de dato para {family}"]
+                }
+                columns.append(column_data)
+            row_data = {
+                "row_key": row_key,
+                "columns": columns
+            }
+            data.append(row_data)
+        table = Table(args.tabla, column_families)
+
+        # Guardar la tabla en formato JSON
+        json_file = f"{args.tabla}"
+        table.initialize_empty_table(json_file)
+        print(f"Tabla '{args.tabla}' creada exitosamente con las siguientes familias de columnas: {
+              ', '.join(args.column_families)}")
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')
 

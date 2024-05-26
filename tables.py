@@ -6,30 +6,34 @@ import os
 import sys
 from tabulate import tabulate
 
+
 def convert_value(value):
     # Primero, intenta convertir a booleano
     if value.lower() in ('true', 'false'):
         return value.lower() == 'true'
-    
+
     # Intenta convertir a entero
     try:
         return int(value)
     except ValueError:
         pass
-    
+
     # Intenta convertir a flotante
     try:
         return float(value)
     except ValueError:
         pass
-    
+
     # Si no se puede convertir, devuelve el valor original
     return value
+
 
 class Table:
     def __init__(self, name, column_families):
         self.name = name
         self.column_families = column_families
+        self.disabled = False
+        self.data = []
 
     def load_from_json(self, json_file):
         """
@@ -123,7 +127,8 @@ class Table:
         col_family = next(
             (cf for cf in self.column_families if cf['name'] == family), None)
         if not col_family:
-            raise ValueError(f"La familia de columnas '{family}' no existe en la tabla.")
+            raise ValueError(f"La familia de columnas '{
+                             family}' no existe en la tabla.")
         max_versions = col_family.get('max_versions', 1)
 
         # Si la fila no existe, crearla
@@ -228,6 +233,42 @@ class Table:
             formatted_data, headers='keys', tablefmt='grid')
         return formatted_table
 
+    def initialize_empty_table(self, json_file=None):
+        """
+        Inicializa la tabla con una estructura vacía de datos.
+        """
+        data = {
+            'table_name': self.name,
+            'column_families': self.column_families,
+            'data': [],
+            'disabled': self.disabled
+        }
+
+        row_key_base = 'row_key'
+        column_qualifier_base = 'column_qualifier'
+        row_key_counter = 1
+        column_qualifier_counter = 1
+
+        for family in self.column_families:
+            row_key = f"{row_key_base}{row_key_counter}"
+            column_qualifier = f"{column_qualifier_base}{
+                column_qualifier_counter}"
+
+            data['data'].append({
+                'row_key': row_key,
+                'column_family': family['name'],
+                'column_qualifier': column_qualifier,
+                'timestamp': ''
+            })
+
+    # Incrementar los contadores para la siguiente iteración
+        row_key_counter += 1
+        column_qualifier_counter += 1
+
+        # Guardar el objeto JSON en un archivo
+        with open('./datos/' + json_file + '.json', 'w') as file:
+            json.dump(data, file, indent=2)
+
     def disable(self):
         """
         Deshabilita la tabla.
@@ -277,7 +318,8 @@ class Table:
 
         if col_family_col_name:
             if ':' not in col_family_col_name:
-                raise ValueError("El nombre de la columna debe estar en el formato 'familia:columna'.")
+                raise ValueError(
+                    "El nombre de la columna debe estar en el formato 'familia:columna'.")
             family, col_name = col_family_col_name.split(':')
             col_key = f"{family}:{col_name}"
 
@@ -319,7 +361,6 @@ class Table:
         self.save_to_json(self.name)
         return f"Toda la fila con clave '{row_key}' ha sido eliminada de la tabla."
 
-
     def drop_table(self, table_name):
         """
         Elimina una tabla tanto en memoria como el archivo JSON correspondiente.
@@ -336,7 +377,7 @@ class Table:
             return f"La tabla '{table_name}' ha sido eliminada del sistema de archivos y de la memoria."
         else:
             return f"La tabla '{table_name}' no existe en el sistema de archivos."
-        
+
     def truncate(self):
         """
         Trunca (vacía) la tabla deshabilitándola, eliminándola y recreándola con la misma estructura.
@@ -356,7 +397,20 @@ class Table:
         # Volver a crear la tabla con la misma estructura
         print("Recreating Table...")
         self.column_families = column_families
-        self.data = pd.DataFrame(columns=[f"{cf['name']}:{col}" for cf in column_families for col in ['column']])
+        self.data = pd.DataFrame(
+            columns=[f"{cf['name']}:{col}" for cf in column_families for col in ['column']])
         self.save_to_json(self.name)
         fin = time.time()
         return f"Todos los datos de la tabla '{self.name}' han sido eliminados y la tabla ha sido recreada en {round(fin - inicio, 3)} seg"
+
+    def create_table(name, column_families):
+        """
+        Crea una nueva tabla y guarda su estructura en un archivo JSON.
+
+        Args:
+            name (str): El nombre de la tabla.
+            column_families (list): Una lista de familias de columnas.
+        """
+        table = Table(name, column_families)
+        table.save_to_json(name)
+        return table

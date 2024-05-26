@@ -1,0 +1,40 @@
+{
+  "table_name": "test2",
+  "column_families": [
+    {
+      "name": "testcolumn1",
+      "max_versions": 4,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 230227,
+      "blocksize": 63359,
+      "blockcache": false
+    },
+    {
+      "name": "testcolumn2",
+      "max_versions": 6,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 28780,
+      "blocksize": 55882,
+      "blockcache": false
+    }
+  ],
+  "data": [
+    {
+      "row_key": "row_key1",
+      "column_family": "testcolumn1",
+      "column_qualifier": "column_qualifier1",
+      "timestamp": ""
+    },
+    {
+      "row_key": "row_key1",
+      "column_family": "testcolumn2",
+      "column_qualifier": "column_qualifier1",
+      "timestamp": ""
+    }
+  ],
+  "disabled": false
+}

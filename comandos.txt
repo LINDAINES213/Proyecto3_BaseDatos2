@@ -61,3 +61,6 @@ python main.py delete usuarios user1 info_personal:edad 25 # El que nos pedian e
 
 # deleteAll
 python main.py deleteAll usuarios user1
+
+#Create 
+python main.py create --tabla test2 --column_families testcolumn1 testcolumn2
