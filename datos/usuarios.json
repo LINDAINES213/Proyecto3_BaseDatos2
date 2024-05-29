@@ -74,9 +74,9 @@
           "family": "info_personal",
           "column": "nombre",
           "timestamps": [
+            "Linda",
             "Juan Esteban",
-            "Juan Esteban",
-            "Maria Gonzalez"
+            "Juan Esteban"
           ]
         },
         {

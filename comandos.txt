@@ -38,7 +38,7 @@ python main.py enable usuarios ✅
 python main.py is_enabled usuarios ✅
 
 # drop
-python main.py drop usuarios 
+python main.py drop usuarios ✅
 
 #alter_table
 #Para añadir
