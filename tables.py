@@ -127,8 +127,7 @@ class Table:
         col_family = next(
             (cf for cf in self.column_families if cf['name'] == family), None)
         if not col_family:
-            raise ValueError(f"La familia de columnas '{
-                             family}' no existe en la tabla.")
+            raise ValueError(f"La familia de columnas '{family}' no existe en la tabla.")
         max_versions = col_family.get('max_versions', 1)
 
         # Si la fila no existe, crearla
@@ -251,8 +250,7 @@ class Table:
 
         for family in self.column_families:
             row_key = f"{row_key_base}{row_key_counter}"
-            column_qualifier = f"{column_qualifier_base}{
-                column_qualifier_counter}"
+            column_qualifier = f"{column_qualifier_base}{column_qualifier_counter}"
 
             data['data'].append({
                 'row_key': row_key,
