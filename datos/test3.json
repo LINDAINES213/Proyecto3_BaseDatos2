@@ -1,0 +1,68 @@
+{
+  "table_name": "test3",
+  "column_families": [
+    {
+      "name": "testcolumn1",
+      "max_versions": 8,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 73479,
+      "blocksize": 33040,
+      "blockcache": false
+    },
+    {
+      "name": "testcolumn2",
+      "max_versions": 5,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 353376,
+      "blocksize": 6072,
+      "blockcache": false
+    },
+    {
+      "name": "testcolumn3",
+      "max_versions": 3,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 301541,
+      "blocksize": 65452,
+      "blockcache": false
+    }
+  ],
+  "data": [
+    {
+      "row_key": "row_key2",
+      "columns": [
+        {
+          "family": "testcolumn1",
+          "column": "test",
+          "timestamp": []
+        }
+      ]
+    },
+    {
+      "row_key": "row_key1",
+      "columns": [
+        {
+          "family": "testcolumn2",
+          "column": "test",
+          "timestamp": []
+        }
+      ]
+    },
+    {
+      "row_key": "row_key9",
+      "columns": [
+        {
+          "family": "testcolumn3",
+          "column": "test",
+          "timestamp": []
+        }
+      ]
+    }
+  ],
+  "disabled": false
+}

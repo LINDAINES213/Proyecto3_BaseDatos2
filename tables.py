@@ -1,11 +1,10 @@
-from collections import defaultdict
-from itertools import zip_longest
 import time
 import pandas as pd
 import json
 import math
 import os
 import sys
+import random
 from tabulate import tabulate
 
 
@@ -129,7 +128,8 @@ class Table:
         col_family = next(
             (cf for cf in self.column_families if cf['name'] == family), None)
         if not col_family:
-            raise ValueError(f"La familia de columnas '{family}' no existe en la tabla.")
+            raise ValueError(f"La familia de columnas '{
+                             family}' no existe en la tabla.")
         max_versions = col_family.get('max_versions', 1)
 
         # Si la fila no existe, crearla
@@ -141,34 +141,20 @@ class Table:
         if col_key not in self.data.columns:
             self.data[col_key] = None
 
-        # Verificar si el valor es una lista
-        if isinstance(self.data.at[row_key, col_key], list):
-            # Si es una lista, agregar el nuevo valor a la lista existente
-            self.data.at[row_key, col_key].insert(0, value)
-            # Si el número de versiones excede max_versions, eliminar el último elemento
-            max_versions = col_family.get('max_versions', 1)
-            if len(self.data.at[row_key, col_key]) > max_versions:
-                self.data.at[row_key, col_key] = self.data.at[row_key, col_key][:max_versions]
+        if pd.isna(self.data.at[row_key, col_key]).any():
+            self.data.at[row_key, col_key] = [value]
         else:
-            # Si no es una lista, continuar con la lógica original para verificar si es NaN o None
-            if pd.isna(self.data.at[row_key, col_key]) or self.data.at[row_key, col_key] is None:
-                # Si el valor es NaN o None, crear una nueva lista con el valor
+            if isinstance(self.data.at[row_key, col_key], str):
                 self.data.at[row_key, col_key] = [value]
             else:
-                # Si el valor no es NaN ni None, continuar con la lógica original de actualización
-                if isinstance(self.data.at[row_key, col_key], str):
-                    # Si es una cadena, convertirla en una lista con el nuevo valor
-                    self.data.at[row_key, col_key] = [value]
-                else:
-                    # Si ya es una lista, agregar el nuevo valor a la lista existente
-                    self.data.at[row_key, col_key].insert(0, value)
-                    # Si el número de versiones excede max_versions, eliminar el último elemento
-                    if len(self.data.at[row_key, col_key]) > max_versions:
-                        self.data.at[row_key, col_key] = self.data.at[row_key, col_key][:max_versions]
+                self.data.at[row_key, col_key].insert(0, value)
+                # Si el número de versiones excede max_versions, eliminar el último elemento
+                if len(self.data.at[row_key, col_key]) > max_versions:
+                    self.data.at[row_key, col_key] = self.data.at[row_key,
+                                                                  col_key][:max_versions]
 
         # Guardar los cambios en el archivo JSON
         self.save_to_json(f'{self.name}')
-
 
     def get(self, row_key, column_family=None, column=None):
         """
@@ -182,7 +168,6 @@ class Table:
         Returns:
             str: Una representación formateada de los datos solicitados.
         """
-
         if self.data.empty or len(self.data) == 0:
             return "No hay datos cargados en la tabla."
 
@@ -192,25 +177,20 @@ class Table:
             return f"La fila con clave '{row_key}' no existe en la tabla."
 
         if column_family and column:
-            filtered_data = row_data[row_data.index.str.contains(f"^{column_family}:{column}:")]
+            filtered_data = row_data[row_data.index.str.contains(
+                f"^{column_family}:{column}:")]
             if filtered_data.empty:
                 return f"La columna '{column_family}:{column}' no existe en la fila '{row_key}'."
             else:
                 return filtered_data.to_string(header=False)
 
         elif column_family:
-            filtered_data = row_data[row_data.index.str.startswith(f"{column_family}:")]
+            filtered_data = row_data[row_data.index.str.startswith(
+                f"{column_family}:")]
             return filtered_data.to_string(header=False)
 
         else:
-            table = defaultdict(list)
-            for col, value in row_data.items():
-                table[col].append(value[0] if isinstance(value, list) else value)
-
-            headers = list(table.keys())
-            rows = [list(values) for values in zip_longest(*table.values(), fillvalue='')]
-
-            return tabulate(rows, headers=headers, tablefmt="grid")
+            return row_data.to_string(header=False)
 
     def scan(self, start_row=None, stop_row=None):
         """
@@ -242,12 +222,8 @@ class Table:
         for index, row in filtered_data.iterrows():
             processed_row = {'row_key': index}
             for col_name, timestamps in row.items():
-                if isinstance(timestamps, float) and math.isnan(timestamps):
-                    # Manejar el caso de nan
-                    processed_row[col_name] = "NaN"
-                else:
-                    # Proceder con el acceso a los elementos de timestamps
-                    processed_row[col_name] = timestamps[0]
+                # Solo tomar el primer elemento
+                processed_row[col_name] = timestamps[0]
             processed_data.append(processed_row)
 
         formatted_data = pd.DataFrame(processed_data)
@@ -268,24 +244,22 @@ class Table:
             'disabled': self.disabled
         }
 
-        row_key_base = 'row_key'
-        column_qualifier_base = 'column_qualifier'
-        row_key_counter = 1
-        column_qualifier_counter = 1
-
         for family in self.column_families:
-            row_key = f"{row_key_base}{row_key_counter}"
-            column_qualifier = f"{column_qualifier_base}{column_qualifier_counter}"
-
+            row_key = f"row_key{random.randint(1, 10)}"
             data['data'].append({
                 'row_key': row_key,
-                'columns': family['name'],
-                'timestamps': []
+                "columns": [
+                    {
+                        'family': family['name'],
+                        'column': "test",
+                        'timestamp': []}
+                ]
+
             })
 
-    # Incrementar los contadores para la siguiente iteración
-        row_key_counter += 1
-        column_qualifier_counter += 1
+        # Guardar el objeto JSON en un archivo
+        with open('./datos/' + json_file + '.json', 'w') as file:
+            json.dump(data, file, indent=2)
 
         # Guardar el objeto JSON en un archivo
         with open('./datos/' + json_file + '.json', 'w') as file:
@@ -382,6 +356,23 @@ class Table:
         self.data.drop(index=row_key, inplace=True)
         self.save_to_json(self.name)
         return f"Toda la fila con clave '{row_key}' ha sido eliminada de la tabla."
+
+    def drop_table(self, table_name):
+        """
+        Elimina una tabla tanto en memoria como el archivo JSON correspondiente.
+        """
+        # Eliminar la tabla en memoria si está cargada
+        if table_name in self.tables:
+            self.tables[table_name].drop()
+            del self.tables[table_name]
+
+        # Eliminar el archivo JSON correspondiente
+        table_file = os.path.join(self.data_dir, table_name + '.json')
+        if os.path.exists(table_file):
+            os.remove(table_file)
+            return f"La tabla '{table_name}' ha sido eliminada del sistema de archivos y de la memoria."
+        else:
+            return f"La tabla '{table_name}' no existe en el sistema de archivos."
 
     def truncate(self):
         """
