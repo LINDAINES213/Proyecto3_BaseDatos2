@@ -3,12 +3,12 @@
   "column_families": [
     {
       "name": "test2",
-      "max_versions": 6,
+      "max_versions": 4,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 534075,
-      "blocksize": 56239,
+      "ttl": 32673,
+      "blocksize": 53186,
       "blockcache": false
     },
     {
@@ -17,57 +17,57 @@
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 349039,
-      "blocksize": 58091,
+      "ttl": 471472,
+      "blocksize": 34908,
       "blockcache": false
     },
     {
       "name": "testcolumn2",
-      "max_versions": 1,
+      "max_versions": 10,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 249477,
-      "blocksize": 36878,
+      "ttl": 477568,
+      "blocksize": 30218,
       "blockcache": false
     }
   ],
   "data": [
     {
-      "row_key": "row_key5",
+      "row_key": "row_key1",
       "columns": [
         {
-          "family": "test2",
+          "family": "testcolumn2",
           "column": "test",
           "timestamps": []
         },
         {
-          "family": "testcolumn2",
+          "family": "testcolumn1",
           "column": "test",
           "timestamps": "NaN"
         },
         {
-          "family": "testcolumn1",
+          "family": "test2",
           "column": "test",
           "timestamps": "NaN"
         }
       ]
     },
     {
-      "row_key": "row_key6",
+      "row_key": "row_key3",
       "columns": [
         {
-          "family": "test2",
+          "family": "testcolumn2",
           "column": "test",
           "timestamps": "NaN"
         },
         {
-          "family": "testcolumn2",
+          "family": "testcolumn1",
           "column": "test",
           "timestamps": []
         },
         {
-          "family": "testcolumn1",
+          "family": "test2",
           "column": "test",
           "timestamps": "NaN"
         }
@@ -77,17 +77,17 @@
       "row_key": "row_key8",
       "columns": [
         {
-          "family": "test2",
-          "column": "test",
-          "timestamps": "NaN"
-        },
-        {
           "family": "testcolumn2",
           "column": "test",
           "timestamps": "NaN"
         },
         {
           "family": "testcolumn1",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "test2",
           "column": "test",
           "timestamps": []
         }
