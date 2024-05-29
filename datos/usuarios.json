@@ -134,6 +134,92 @@
           "timestamps": "NaN"
         }
       ]
+    },
+    {
+      "row_key": "user4",
+      "columns": [
+        {
+          "family": "info_personal",
+          "column": "nombre",
+          "timestamps": [
+            "Diego",
+            "Diego",
+            "Diego"
+          ]
+        },
+        {
+          "family": "info_personal",
+          "column": "edad",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "email",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "telefono",
+          "timestamps": "NaN"
+        }
+      ]
+    },
+    {
+      "row_key": "user5",
+      "columns": [
+        {
+          "family": "info_personal",
+          "column": "nombre",
+          "timestamps": [
+            "Diego",
+            "Diego",
+            "Diego"
+          ]
+        },
+        {
+          "family": "info_personal",
+          "column": "edad",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "email",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "telefono",
+          "timestamps": "NaN"
+        }
+      ]
+    },
+    {
+      "row_key": "user6",
+      "columns": [
+        {
+          "family": "info_personal",
+          "column": "nombre",
+          "timestamps": [
+            "Dieg",
+            "Diego"
+          ]
+        },
+        {
+          "family": "info_personal",
+          "column": "edad",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "email",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "telefono",
+          "timestamps": "NaN"
+        }
+      ]
     }
   ],
   "disabled": false

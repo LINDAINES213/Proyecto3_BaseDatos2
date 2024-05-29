@@ -139,17 +139,30 @@ class Table:
         if col_key not in self.data.columns:
             self.data[col_key] = None
 
-        if pd.isna(self.data.at[row_key, col_key]).any():
-            self.data.at[row_key, col_key] = [value]
+        # Verificar si el valor es una lista
+        if isinstance(self.data.at[row_key, col_key], list):
+            # Si es una lista, agregar el nuevo valor a la lista existente
+            self.data.at[row_key, col_key].insert(0, value)
+            # Si el número de versiones excede max_versions, eliminar el último elemento
+            max_versions = col_family.get('max_versions', 1)
+            if len(self.data.at[row_key, col_key]) > max_versions:
+                self.data.at[row_key, col_key] = self.data.at[row_key, col_key][:max_versions]
         else:
-            if isinstance(self.data.at[row_key, col_key], str):
+            # Si no es una lista, continuar con la lógica original para verificar si es NaN o None
+            if pd.isna(self.data.at[row_key, col_key]) or self.data.at[row_key, col_key] is None:
+                # Si el valor es NaN o None, crear una nueva lista con el valor
                 self.data.at[row_key, col_key] = [value]
             else:
-                self.data.at[row_key, col_key].insert(0, value)
-                # Si el número de versiones excede max_versions, eliminar el último elemento
-                if len(self.data.at[row_key, col_key]) > max_versions:
-                    self.data.at[row_key, col_key] = self.data.at[row_key,
-                                                                  col_key][:max_versions]
+                # Si el valor no es NaN ni None, continuar con la lógica original de actualización
+                if isinstance(self.data.at[row_key, col_key], str):
+                    # Si es una cadena, convertirla en una lista con el nuevo valor
+                    self.data.at[row_key, col_key] = [value]
+                else:
+                    # Si ya es una lista, agregar el nuevo valor a la lista existente
+                    self.data.at[row_key, col_key].insert(0, value)
+                    # Si el número de versiones excede max_versions, eliminar el último elemento
+                    if len(self.data.at[row_key, col_key]) > max_versions:
+                        self.data.at[row_key, col_key] = self.data.at[row_key, col_key][:max_versions]
 
         # Guardar los cambios en el archivo JSON
         self.save_to_json(f'{self.name}')
@@ -221,8 +234,12 @@ class Table:
         for index, row in filtered_data.iterrows():
             processed_row = {'row_key': index}
             for col_name, timestamps in row.items():
-                # Solo tomar el primer elemento
-                processed_row[col_name] = timestamps[0]
+                if isinstance(timestamps, float) and math.isnan(timestamps):
+                    # Manejar el caso de nan
+                    processed_row[col_name] = "NaN"
+                else:
+                    # Proceder con el acceso a los elementos de timestamps
+                    processed_row[col_name] = timestamps[0]
             processed_data.append(processed_row)
 
         formatted_data = pd.DataFrame(processed_data)
