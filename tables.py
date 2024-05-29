@@ -254,7 +254,7 @@ class Table:
 
             data['data'].append({
                 'row_key': row_key,
-                'column': family['name'],
+                'columns': family['name'],
                 'timestamps': []
             })
 
@@ -358,23 +358,7 @@ class Table:
         self.save_to_json(self.name)
         return f"Toda la fila con clave '{row_key}' ha sido eliminada de la tabla."
 
-    def drop_table(self, table_name):
-        """
-        Elimina una tabla tanto en memoria como el archivo JSON correspondiente.
-        """
-        # Eliminar la tabla en memoria si está cargada
-        if table_name in self.tables:
-            self.tables[table_name].drop()
-            del self.tables[table_name]
-
-        # Eliminar el archivo JSON correspondiente
-        table_file = os.path.join(self.data_dir, table_name + '.json')
-        if os.path.exists(table_file):
-            os.remove(table_file)
-            return f"La tabla '{table_name}' ha sido eliminada del sistema de archivos y de la memoria."
-        else:
-            return f"La tabla '{table_name}' no existe en el sistema de archivos."
-
+    
     def truncate(self):
         """
         Trunca (vacía) la tabla deshabilitándola, eliminándola y recreándola con la misma estructura.

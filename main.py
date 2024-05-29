@@ -74,17 +74,17 @@ def main():
 
     # Ejecutar el comando correspondiente
     if args.comando == 'get':
-        if not args.tabla or not args.row_key:
+        if not args.put_args[0] or not args.put_args[1]:
             parser.error(
                 'Debe proporcionar el nombre de la tabla y la clave de la fila')
 
         # Asume que las familias de columnas se cargan desde el archivo JSON
-        tabla = Table(args.tabla, [])
-        tabla.load_from_json(args.tabla)
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
         if tabla.disabled:
             print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
         else:
-            output = tabla.get(args.row_key, args.column_family, args.column)
+            output = tabla.get(args.put_args[1])
             print(output)
 
     elif args.comando == 'scan':
@@ -116,7 +116,7 @@ def main():
             tabla.enable()
             print(f"La tabla '{args.put_args[0]}' ha sido habilitada.")
         else:
-            print(f"La tabla '{args.put_args[0]}' ya se encuentra deshabilitada.")
+            print(f"La tabla '{args.put_args[0]}' ya se encuentra habilitada.")
 
     elif args.comando == 'list':
         tables = file_manager.list()
@@ -126,23 +126,22 @@ def main():
         print()
 
     elif args.comando == 'count':
-        if not args.tabla:
+        if not args.put_args[0]:
             parser.error('Debe proporcionar el nombre de la tabla')
 
         try:
-            row_count, check = file_manager.count(args.tabla)
+            row_count, check = file_manager.count(args.put_args[0])
             if check:
                 print(row_count)
             else:
-                print(f"""\nNúmero de filas en la tabla '{
-                      args.tabla}': {row_count}\n""")
+                print(f"""\nNúmero de filas en la tabla '{args.put_args[0]}': {row_count}\n""")
         except ValueError as e:
             print(f"Error: {e}")
 
     elif args.comando == 'describe':
-        if not args.tabla:
+        if not args.put_args[0]:
             parser.error('Debe proporcionar el nombre de la tabla')
-        file_manager.describe(args.tabla, args.tabla)
+        file_manager.describe(args.put_args[0], args.put_args[0])
 
     elif args.comando == 'is_disabled':
         tabla = Table(args.put_args[0], [])
@@ -301,7 +300,7 @@ def main():
                 # Generar datos de ejemplo para cada columna de la familia
                 column_data = {
                     "family": family,
-                    "column": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
+                    "columns": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
                     "timestamps": [f"Ejemplo de dato para {family}"]
                 }
                 columns.append(column_data)

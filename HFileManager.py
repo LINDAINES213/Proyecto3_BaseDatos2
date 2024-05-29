@@ -1,5 +1,7 @@
 import os
 import json
+
+import pandas as pd
 from tables import Table
 
 
@@ -130,3 +132,40 @@ class HFileManager:
 
         else:
             print(f"Acción '{action}' no reconocida.")
+    
+    def drop_table(self, table_name):
+        """
+        Elimina una tabla tanto en memoria como el archivo JSON correspondiente.
+        """
+        # Eliminar la tabla en memoria si está cargada
+        if table_name in self.tables:
+            self.tables[table_name].drop()
+            del self.tables[table_name]
+
+        # Eliminar el archivo JSON correspondiente
+        table_file = os.path.join(self.data_dir, table_name + '.json')
+        if os.path.exists(table_file):
+            os.remove(table_file)
+            return f"La tabla '{table_name}' ha sido eliminada del sistema de archivos y de la memoria."
+        else:
+            return f"La tabla '{table_name}' no existe en el sistema de archivos."
+        
+    def drop_all(self):
+        """
+        Elimina todas las tablas tanto en memoria como sus archivos JSON correspondientes.
+        """
+        # Obtener la lista de todas las tablas
+        all_tables = self.list()
+
+        # Eliminar todas las tablas en memoria
+        for table_name in list(self.tables.keys()):
+            self.tables[table_name].drop()
+            del self.tables[table_name]
+
+        # Eliminar todos los archivos JSON correspondientes
+        for table_name in all_tables:
+            table_file = os.path.join(self.data_dir, table_name + '.json')
+            if os.path.exists(table_file):
+                os.remove(table_file)
+
+        return "Todas las tablas han sido eliminadas del sistema de archivos y de la memoria."
