@@ -52,15 +52,15 @@ python main.py alter usuarios testfamily --delete ✅
 python main.py truncate 'usuarios' ✅
 
 # dropAll
-python main.py drop_all
+python main.py drop_all ✅
 
 # delete
-python main.py delete usuarios user1
+python main.py delete usuarios user1 ✅
 python main.py delete usuarios user1 info_personal:edad
-python main.py delete usuarios user1 info_personal:edad 25 # El que nos pedian era este, los de arriba son extra
+python main.py delete usuarios user1 info_personal:edad 25 ✅ # El que nos pedian era este, los de arriba son extra
 
 # deleteAll
-python main.py deleteAll usuarios user1
+python main.py deleteAll usuarios user1 ✅
 
 #Create 
 python main.py create test2 testcolumn1 testcolumn2
