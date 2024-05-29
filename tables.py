@@ -1,3 +1,5 @@
+from collections import defaultdict
+from itertools import zip_longest
 import time
 import pandas as pd
 import json
@@ -167,6 +169,7 @@ class Table:
         Returns:
             str: Una representación formateada de los datos solicitados.
         """
+
         if self.data.empty or len(self.data) == 0:
             return "No hay datos cargados en la tabla."
 
@@ -176,20 +179,25 @@ class Table:
             return f"La fila con clave '{row_key}' no existe en la tabla."
 
         if column_family and column:
-            filtered_data = row_data[row_data.index.str.contains(
-                f"^{column_family}:{column}:")]
+            filtered_data = row_data[row_data.index.str.contains(f"^{column_family}:{column}:")]
             if filtered_data.empty:
                 return f"La columna '{column_family}:{column}' no existe en la fila '{row_key}'."
             else:
                 return filtered_data.to_string(header=False)
 
         elif column_family:
-            filtered_data = row_data[row_data.index.str.startswith(
-                f"{column_family}:")]
+            filtered_data = row_data[row_data.index.str.startswith(f"{column_family}:")]
             return filtered_data.to_string(header=False)
 
         else:
-            return row_data.to_string(header=False)
+            table = defaultdict(list)
+            for col, value in row_data.items():
+                table[col].append(value[0] if isinstance(value, list) else value)
+
+            headers = list(table.keys())
+            rows = [list(values) for values in zip_longest(*table.values(), fillvalue='')]
+
+            return tabulate(rows, headers=headers, tablefmt="grid")
 
     def scan(self, start_row=None, stop_row=None):
         """
