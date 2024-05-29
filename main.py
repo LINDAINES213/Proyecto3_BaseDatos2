@@ -5,9 +5,6 @@ from sortAllFiles import ordenar_todos_los_archivos_en_carpeta, ordenar_datos_po
 import sys
 import json
 import random
-
-#Main
-
 valid_keys = {
     "name",
     "max_versions",
@@ -77,17 +74,17 @@ def main():
 
     # Ejecutar el comando correspondiente
     if args.comando == 'get':
-        if not args.tabla or not args.row_key:
+        if not args.put_args[0] or not args.put_args[1]:
             parser.error(
                 'Debe proporcionar el nombre de la tabla y la clave de la fila')
 
         # Asume que las familias de columnas se cargan desde el archivo JSON
-        tabla = Table(args.tabla, [])
-        tabla.load_from_json(args.tabla)
+        tabla = Table(args.put_args[0], [])
+        tabla.load_from_json(args.put_args[0])
         if tabla.disabled:
             print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
         else:
-            output = tabla.get(args.row_key, args.column_family, args.column)
+            output = tabla.get(args.put_args[1])
             print(output)
 
     elif args.comando == 'scan':
@@ -107,8 +104,7 @@ def main():
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
         if tabla.disabled:
-            print(f"La tabla '{args.put_args[0]
-                               }' ya se encuentra deshabilitada.")
+            print(f"La tabla '{args.put_args[0]}' ya se encuentra deshabilitada.")
         else:
             tabla.disable()
             print(f"La tabla '{args.put_args[0]}' ha sido deshabilitada.")
@@ -120,8 +116,7 @@ def main():
             tabla.enable()
             print(f"La tabla '{args.put_args[0]}' ha sido habilitada.")
         else:
-            print(f"La tabla '{args.put_args[0]
-                               }' ya se encuentra deshabilitada.")
+            print(f"La tabla '{args.put_args[0]}' ya se encuentra habilitada.")
 
     elif args.comando == 'list':
         tables = file_manager.list()
@@ -131,23 +126,22 @@ def main():
         print()
 
     elif args.comando == 'count':
-        if not args.tabla:
+        if not args.put_args[0]:
             parser.error('Debe proporcionar el nombre de la tabla')
 
         try:
-            row_count, check = file_manager.count(args.tabla)
+            row_count, check = file_manager.count(args.put_args[0])
             if check:
                 print(row_count)
             else:
-                print(f"""\nNúmero de filas en la tabla '{
-                      args.tabla}': {row_count}\n""")
+                print(f"""\nNúmero de filas en la tabla '{args.put_args[0]}': {row_count}\n""")
         except ValueError as e:
             print(f"Error: {e}")
 
     elif args.comando == 'describe':
-        if not args.tabla:
+        if not args.put_args[0]:
             parser.error('Debe proporcionar el nombre de la tabla')
-        file_manager.describe(args.tabla, args.tabla)
+        file_manager.describe(args.put_args[0], args.put_args[0])
 
     elif args.comando == 'is_disabled':
         tabla = Table(args.put_args[0], [])
@@ -187,7 +181,7 @@ def main():
             tabla.save_to_json(args.put_args[0])
             ordenar_datos_por_row_key(f"./datos/{args.put_args[0]}.json")
             print("Datos insertados correctamente.")
-            print(tabla.scan(None, None))
+            print(tabla.scan(None,None))
 
     # Ejecutar el comando correspondiente
     elif args.comando == 'drop':
@@ -207,14 +201,18 @@ def main():
 
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
-        if len(args.put_args) > 3:
-            result = tabla.delete(
-                args.put_args[1], args.put_args[2], args.put_args[3])
-        elif len(args.put_args) > 2:
-            result = tabla.delete(args.put_args[1], args.put_args[2])
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
         else:
-            result = tabla.delete(args.put_args[1])
-        print(result)
+            
+            if len(args.put_args) > 3:
+                result = tabla.delete(
+                    args.put_args[1], args.put_args[2], args.put_args[3])
+            elif len(args.put_args) > 2:
+                result = tabla.delete(args.put_args[1], args.put_args[2])
+            else:
+                result = tabla.delete(args.put_args[1])
+            print(result)
 
     elif args.comando == 'deleteAll':
         if not args.put_args[0] or not args.put_args[1]:
@@ -223,8 +221,11 @@ def main():
 
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
-        result = tabla.deleteAll(args.put_args[1])
-        print(result)
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
+        else:
+            result = tabla.deleteAll(args.put_args[1])
+            print(result)
 
     elif args.comando == 'alter':
         if not args.put_args[0] or not args.put_args[1]:
@@ -238,8 +239,7 @@ def main():
         if args.add:
             existing_families = [cf['name'] for cf in table.column_families]
             if args.put_args[1] in existing_families:
-                print(f"La columna familia '{
-                      args.put_args[1]}' ya existe en la tabla '{args.put_args[0]}'.")
+                print(f"La columna familia '{args.put_args[1]}' ya existe en la tabla '{args.put_args[0]}'.")
             else:
                 new_family = {
                     "name": args.put_args[1],
@@ -253,8 +253,7 @@ def main():
                 }
                 table.column_families.append(new_family)
                 table.save_to_json(args.put_args[0])
-                print(f"La columna familia '{
-                      args.put_args[1]}' ha sido agregada a la tabla '{args.put_args[0]}'.")
+                print(f"La columna familia '{args.put_args[1]}' ha sido agregada a la tabla '{args.put_args[0]}'.")
 
         elif args.modify:
             details = create_and_convert_dict(args.modify, parser)
@@ -262,18 +261,15 @@ def main():
                 if family['name'] == args.put_args[1]:
                     family.update(details)
                     table.save_to_json(args.put_args[0])
-                    print(f"La columna familia '{
-                          args.put_args[1]}' ha sido modificada en la tabla '{args.put_args[0]}'.")
+                    print(f"La columna familia '{args.put_args[1]}' ha sido modificada en la tabla '{args.put_args[0]}'.")
                     return
-            print(f"La columna familia '{
-                  args.put_args[1]}' no se encontró en la tabla '{args.put_args[0]}'.")
+            print(f"La columna familia '{args.put_args[1]}' no se encontró en la tabla '{args.put_args[0]}'.")
 
         elif args.delete:
             table.column_families = [
                 cf for cf in table.column_families if cf['name'] != args.put_args[1]]
             table.save_to_json(args.put_args[0])
-            print(f"La columna familia '{
-                  args.put_args[1]}' ha sido eliminada de la tabla '{args.put_args[0]}'.")
+            print(f"La columna familia '{args.put_args[1]}' ha sido eliminada de la tabla '{args.put_args[0]}'.")
 
         else:
             print("Debe especificar una acción: --add, --modify <detalles> o --delete.")
@@ -288,8 +284,8 @@ def main():
         result = tabla.truncate()
         print(result)
 
-    if args.comando == 'create':
-        if not args.tabla or not args.column_families:
+    elif args.comando == 'create':
+        if not args.put_args[0] or not args.put_args[1]:
             parser.error(
                 'Debe proporcionar el nombre de la tabla y al menos una familia de columnas.')
           # Crear la tabla con las familias de columnas especificadas
@@ -302,16 +298,16 @@ def main():
             'ttl': random.randint(3600, 604800),
             'blocksize': random.randint(1024, 65536),
             'blockcache': False
-        } for name in args.column_families]
+        } for name in args.put_args[1]]
         data = []
         for i in range(1, 6):  # Generar datos para 5 filas de ejemplo
             row_key = f"row_{i}"
             columns = []
-            for family in args.column_families:
+            for family in args.put_args[1]:
                 # Generar datos de ejemplo para cada columna de la familia
                 column_data = {
                     "family": family,
-                    "column": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
+                    "columns": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
                     "timestamps": [f"Ejemplo de dato para {family}"]
                 }
                 columns.append(column_data)
@@ -320,13 +316,12 @@ def main():
                 "columns": columns
             }
             data.append(row_data)
-        table = Table(args.tabla, column_families)
+        table = Table(args.put_args[0], column_families)
 
         # Guardar la tabla en formato JSON
-        json_file = f"{args.tabla}"
+        json_file = f"{args.put_args[0]}"
         table.initialize_empty_table(json_file)
-        print(f"Tabla '{args.tabla}' creada exitosamente con las siguientes familias de columnas: {
-              ', '.join(args.column_families)}")
+        print(f"Tabla '{args.put_args[0]}' creada exitosamente con las siguientes familias de columnas: {', '.join(args.put_args[1:])}")
 
     elif args.comando == 'insert_many':
         if not args.tabla or not args.row_key or not args.columnas_y_valores:
@@ -346,10 +341,8 @@ def main():
         table = Table(args.tabla, [])
         table.load_from_json(args.tabla)
         table.insert_many(args.row_key, columnas_y_valores)
-        print(f"Valores insertados en la fila '{
-              args.row_key}' de la tabla '{args.tabla}'.")
-        print(f"Tabla '{args.put_args[0]}' creada exitosamente con las siguientes familias de columnas: {
-              ', '.join(args.put_args[1:])}")
+        print(f"Valores insertados en la fila '{args.row_key}' de la tabla '{args.tabla}'.")
+        print(f"Tabla '{args.put_args[0]}' creada exitosamente con las siguientes familias de columnas: {', '.join(args.put_args[1:])}")
     else:
         parser.error(f'Comando "{args.comando}" no reconocido')
 

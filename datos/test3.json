@@ -34,20 +34,20 @@
   ],
   "data": [
     {
-      "row_key": "row_key2",
+      "row_key": "row_key1",
       "columns": [
         {
-          "family": "testcolumn1",
+          "family": "testcolumn2",
           "column": "test",
           "timestamp": []
         }
       ]
     },
     {
-      "row_key": "row_key1",
+      "row_key": "row_key2",
       "columns": [
         {
-          "family": "testcolumn2",
+          "family": "testcolumn1",
           "column": "test",
           "timestamp": []
         }
