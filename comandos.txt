@@ -23,7 +23,7 @@ python main.py count usuarios ✅
 python main.py describe usuarios ✅
 
 # Put 
-python main.py put usuarios user2 info_personal:nombre "Juan Esteban"
+python main.py put usuarios user2 info_personal:nombre "Juan Esteban" ✅
 
 # disable: Deshabilita una tabla especificada
 python main.py disable usuarios ✅

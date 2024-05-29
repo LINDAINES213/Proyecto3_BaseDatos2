@@ -7,7 +7,7 @@ import sys
 import random
 from tabulate import tabulate
 
-
+#Tables
 def convert_value(value):
     # Primero, intenta convertir a booleano
     if value.lower() in ('true', 'false'):

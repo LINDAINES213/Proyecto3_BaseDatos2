@@ -142,7 +142,7 @@
           "family": "info_personal",
           "column": "nombre",
           "timestamps": [
-            "Diego",
+            "Ines",
             "Diego",
             "Diego"
           ]
@@ -208,6 +208,35 @@
           "family": "info_personal",
           "column": "edad",
           "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "email",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "telefono",
+          "timestamps": "NaN"
+        }
+      ]
+    },
+    {
+      "row_key": "user7",
+      "columns": [
+        {
+          "family": "info_personal",
+          "column": "nombre",
+          "timestamps": [
+            "Ines"
+          ]
+        },
+        {
+          "family": "info_personal",
+          "column": "edad",
+          "timestamps": [
+            "22"
+          ]
         },
         {
           "family": "contacto",
