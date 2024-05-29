@@ -256,9 +256,8 @@ class Table:
 
             data['data'].append({
                 'row_key': row_key,
-                'column_family': family['name'],
-                'column_qualifier': column_qualifier,
-                'timestamp': ''
+                'column': family['name'],
+                'timestamps': []
             })
 
     # Incrementar los contadores para la siguiente iteración
@@ -404,7 +403,7 @@ class Table:
         return f"Todos los datos de la tabla '{self.name}' han sido eliminados y la tabla ha sido recreada en {round(fin - inicio, 3)} seg"
 
     def create_table(name, column_families):
-        """
+        """S
         Crea una nueva tabla y guarda su estructura en un archivo JSON.
 
         Args:
@@ -414,3 +413,31 @@ class Table:
         table = Table(name, column_families)
         table.save_to_json(name)
         return table
+
+    def insert_many(self, row_key, columns):
+        # Busca la fila con la clave row_key
+        row_index = self.data[self.data['row_key'] == row_key].index
+
+        if not row_index.empty:
+            # Actualiza los datos si la fila existe
+            for family_column, value in columns:
+                family, column = family_column.split(':')
+                self.data.at[row_index, 'columns'].append({
+                    'family': family,
+                    'column': column,
+                    'timestamps': [value]
+                })
+        else:
+            # Añade una nueva fila si no existe
+            new_row = {'row_key': row_key, 'columns': []}
+            for family_column, value in columns:
+                family, column = family_column.split(':')
+                new_row['columns'].append({
+                    'family': family,
+                    'column': column,
+                    'timestamps': [value]
+                })
+            self.data = self.data.append(new_row, ignore_index=True)
+
+        # Guarda los cambios en el archivo JSON
+        self.save_to_json(self.name)

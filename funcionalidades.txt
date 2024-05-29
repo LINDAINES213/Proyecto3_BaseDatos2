@@ -9,7 +9,7 @@ Esta clase se encargará del manejo de las operaciones relacionadas con una tabl
 
 Funciones DDL:
 
-create: Crear una nueva tabla. - Jose
+create: Crear una nueva tabla. - Jose ✅
 alter: Modificar la estructura de la tabla (por ejemplo, agregar o eliminar familias de columnas). - Jose ✅ 
 drop: Eliminar una tabla existente. - David ✅
 describe: Mostrar la información detallada de una tabla (nombre, familias de columnas, etc.). ✅

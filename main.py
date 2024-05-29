@@ -61,6 +61,9 @@ def main():
                         help='Eliminar una column family existente')
     parser.add_argument('--column_families', nargs='+',
                         help='Familias de columnas')
+    parser.add_argument('--columnas_y_valores', nargs='+',
+                        help='Lista de columnas y valores')
+
     # Analizar los argumentos
     args = parser.parse_args()
 
@@ -315,8 +318,27 @@ def main():
         table.initialize_empty_table(json_file)
         print(f"Tabla '{args.tabla}' creada exitosamente con las siguientes familias de columnas: {
               ', '.join(args.column_families)}")
-    else:
-        parser.error(f'Comando "{args.comando}" no reconocido')
+
+    elif args.comando == 'insert_many':
+        if not args.tabla or not args.row_key or not args.columnas_y_valores:
+            parser.error(
+                "Debe proporcionar el nombre de la tabla, la clave de la fila y la lista de columnas y valores en formato JSON.")
+
+        try:
+            # Intenta dividir las columnas y valores utilizando ':'
+            columnas_y_valores = [pair.split(':')
+                                  for pair in args.columnas_y_valores]
+        except ValueError:
+            # Si hay un error al dividir, imprime un mensaje de error y finaliza el programa
+            print("Error: Formato no válido para columnas y valores.")
+            return
+
+        # Continúa con la ejecución del comando insert_many
+        table = Table(args.tabla, [])
+        table.load_from_json(args.tabla)
+        table.insert_many(args.row_key, columnas_y_valores)
+        print(f"Valores insertados en la fila '{
+            args.row_key}' de la tabla '{args.tabla}'.")
 
 
 if __name__ == '__main__':
