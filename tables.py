@@ -7,7 +7,7 @@ import math
 import os
 import sys
 from tabulate import tabulate
-
+import random
 
 def convert_value(value):
     # Primero, intenta convertir a booleano
@@ -268,24 +268,22 @@ class Table:
             'disabled': self.disabled
         }
 
-        row_key_base = 'row_key'
-        column_qualifier_base = 'column_qualifier'
-        row_key_counter = 1
-        column_qualifier_counter = 1
-
         for family in self.column_families:
-            row_key = f"{row_key_base}{row_key_counter}"
-            column_qualifier = f"{column_qualifier_base}{column_qualifier_counter}"
-
+            row_key = f"row_key{random.randint(1, 10)}"
             data['data'].append({
                 'row_key': row_key,
-                'columns': family['name'],
-                'timestamps': []
+                "columns": [
+                    {
+                        'family': family['name'],
+                        'column': "test",
+                        'timestamps': []}
+                ]
+
             })
 
-    # Incrementar los contadores para la siguiente iteración
-        row_key_counter += 1
-        column_qualifier_counter += 1
+        # Guardar el objeto JSON en un archivo
+        with open('./datos/' + json_file + '.json', 'w') as file:
+            json.dump(data, file, indent=2)
 
         # Guardar el objeto JSON en un archivo
         with open('./datos/' + json_file + '.json', 'w') as file:
@@ -447,3 +445,15 @@ class Table:
 
         # Guarda los cambios en el archivo JSON
         self.save_to_json(self.name)
+
+    def create_table(name, column_families):
+        """S
+        Crea una nueva tabla y guarda su estructura en un archivo JSON.
+
+        Args:
+            name (str): El nombre de la tabla.
+            column_families (list): Una lista de familias de columnas.
+        """
+        table = Table(name, column_families)
+        table.save_to_json(name)
+        return table

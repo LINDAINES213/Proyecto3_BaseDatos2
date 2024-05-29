@@ -2,172 +2,97 @@
   "table_name": "test2",
   "column_families": [
     {
-      "name": "t",
-      "max_versions": 5,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 197103,
-      "blocksize": 54454,
-      "blockcache": false
-    },
-    {
-      "name": "e",
-      "max_versions": 3,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 469062,
-      "blocksize": 32910,
-      "blockcache": false
-    },
-    {
-      "name": "s",
-      "max_versions": 0,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 244574,
-      "blocksize": 17731,
-      "blockcache": false
-    },
-    {
-      "name": "t",
-      "max_versions": 8,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 497202,
-      "blocksize": 6727,
-      "blockcache": false
-    },
-    {
-      "name": "c",
-      "max_versions": 4,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 516074,
-      "blocksize": 64411,
-      "blockcache": false
-    },
-    {
-      "name": "o",
-      "max_versions": 1,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 58333,
-      "blocksize": 46667,
-      "blockcache": false
-    },
-    {
-      "name": "l",
+      "name": "test2",
       "max_versions": 6,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 180929,
-      "blocksize": 21017,
+      "ttl": 534075,
+      "blocksize": 56239,
       "blockcache": false
     },
     {
-      "name": "u",
-      "max_versions": 1,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 180369,
-      "blocksize": 41482,
-      "blockcache": false
-    },
-    {
-      "name": "m",
-      "max_versions": 4,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 552833,
-      "blocksize": 9326,
-      "blockcache": false
-    },
-    {
-      "name": "n",
+      "name": "testcolumn1",
       "max_versions": 6,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 90257,
-      "blocksize": 33701,
+      "ttl": 349039,
+      "blocksize": 58091,
       "blockcache": false
     },
     {
-      "name": "1",
-      "max_versions": 5,
+      "name": "testcolumn2",
+      "max_versions": 1,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 129259,
-      "blocksize": 36888,
+      "ttl": 249477,
+      "blocksize": 36878,
       "blockcache": false
     }
   ],
   "data": [
     {
-      "row_key": "row_key1",
-      "columns": "t",
-      "timestamps": []
+      "row_key": "row_key5",
+      "columns": [
+        {
+          "family": "test2",
+          "column": "test",
+          "timestamps": []
+        },
+        {
+          "family": "testcolumn2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "testcolumn1",
+          "column": "test",
+          "timestamps": "NaN"
+        }
+      ]
     },
     {
-      "row_key": "row_key1",
-      "columns": "e",
-      "timestamps": []
+      "row_key": "row_key6",
+      "columns": [
+        {
+          "family": "test2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "testcolumn2",
+          "column": "test",
+          "timestamps": []
+        },
+        {
+          "family": "testcolumn1",
+          "column": "test",
+          "timestamps": "NaN"
+        }
+      ]
     },
     {
-      "row_key": "row_key1",
-      "columns": "s",
-      "timestamps": []
-    },
-    {
-      "row_key": "row_key1",
-      "columns": "t",
-      "timestamps": []
-    },
-    {
-      "row_key": "row_key1",
-      "columns": "c",
-      "timestamps": []
-    },
-    {
-      "row_key": "row_key1",
-      "columns": "o",
-      "timestamps": []
-    },
-    {
-      "row_key": "row_key1",
-      "columns": "l",
-      "timestamps": []
-    },
-    {
-      "row_key": "row_key1",
-      "columns": "u",
-      "timestamps": []
-    },
-    {
-      "row_key": "row_key1",
-      "columns": "m",
-      "timestamps": []
-    },
-    {
-      "row_key": "row_key1",
-      "columns": "n",
-      "timestamps": []
-    },
-    {
-      "row_key": "row_key1",
-      "columns": "1",
-      "timestamps": []
+      "row_key": "row_key8",
+      "columns": [
+        {
+          "family": "test2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "testcolumn2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "testcolumn1",
+          "column": "test",
+          "timestamps": []
+        }
+      ]
     }
   ],
-  "disabled": false
+  "disabled": true
 }

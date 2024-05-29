@@ -288,7 +288,7 @@ def main():
         if not args.put_args[0] or not args.put_args[1]:
             parser.error(
                 'Debe proporcionar el nombre de la tabla y al menos una familia de columnas.')
-          # Crear la tabla con las familias de columnas especificadas
+        # Crear la tabla con las familias de columnas especificadas
         column_families = [{
             'name': name,
             'max_versions': random.randint(0, 10),
@@ -298,7 +298,7 @@ def main():
             'ttl': random.randint(3600, 604800),
             'blocksize': random.randint(1024, 65536),
             'blockcache': False
-        } for name in args.put_args[1]]
+        } for name in args.put_args]
         data = []
         for i in range(1, 6):  # Generar datos para 5 filas de ejemplo
             row_key = f"row_{i}"
@@ -307,7 +307,7 @@ def main():
                 # Generar datos de ejemplo para cada columna de la familia
                 column_data = {
                     "family": family,
-                    "columns": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
+                    "column": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
                     "timestamps": [f"Ejemplo de dato para {family}"]
                 }
                 columns.append(column_data)
@@ -322,6 +322,7 @@ def main():
         json_file = f"{args.put_args[0]}"
         table.initialize_empty_table(json_file)
         print(f"Tabla '{args.put_args[0]}' creada exitosamente con las siguientes familias de columnas: {', '.join(args.put_args[1:])}")
+
 
     elif args.comando == 'insert_many':
         if not args.tabla or not args.row_key or not args.columnas_y_valores:

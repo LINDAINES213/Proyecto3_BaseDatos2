@@ -68,14 +68,41 @@
       ]
     },
     {
+      "row_key": "user10",
+      "columns": [
+        {
+          "family": "info_personal",
+          "column": "nombre",
+          "timestamps": [
+            "Juan Esteban"
+          ]
+        },
+        {
+          "family": "info_personal",
+          "column": "edad",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "email",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "contacto",
+          "column": "telefono",
+          "timestamps": "NaN"
+        }
+      ]
+    },
+    {
       "row_key": "user2",
       "columns": [
         {
           "family": "info_personal",
           "column": "nombre",
           "timestamps": [
-            "Linda",
             "Juan Esteban",
+            "Linda",
             "Juan Esteban"
           ]
         },
