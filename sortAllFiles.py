@@ -10,7 +10,7 @@ def ordenar_datos_por_row_key(file_path):
             data['data'] = sorted(data['data'], key=lambda x: x['row_key'])
             with open(file_path, 'w') as file:
                 json.dump(data, file, indent=2)
-            print(f"Datos ordenados en {file_path}")
+            #print(f"Datos ordenados en {file_path}")
         else:
             print(f"No se encontró la clave 'data' en {file_path}")
     except Exception as e:

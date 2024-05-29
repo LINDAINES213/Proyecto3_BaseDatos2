@@ -1,6 +1,7 @@
 import argparse
 from tables import Table, convert_value
 from HFileManager import HFileManager
+from sortAllFiles import ordenar_todos_los_archivos_en_carpeta, ordenar_datos_por_row_key
 import sys
 import json
 import random
@@ -66,6 +67,8 @@ def main():
 
     # Analizar los argumentos
     args = parser.parse_args()
+
+    ordenar_todos_los_archivos_en_carpeta("./datos")
 
     file_manager = HFileManager('./datos',)
 
@@ -177,6 +180,9 @@ def main():
         else:
             tabla.put(row_key, col_family_col_name, value)
             tabla.save_to_json(args.put_args[0])
+            ordenar_datos_por_row_key(f"./datos/{args.put_args[0]}.json")
+            print("Datos insertados correctamente.")
+            print(tabla.scan(None,None))
 
     # Ejecutar el comando correspondiente
     elif args.comando == 'drop':
@@ -272,7 +278,7 @@ def main():
         result = tabla.truncate()
         print(result)
 
-    if args.comando == 'create':
+    elif args.comando == 'create':
         if not args.put_args[0] or not args.put_args[1]:
             parser.error(
                 'Debe proporcionar el nombre de la tabla y al menos una familia de columnas.')

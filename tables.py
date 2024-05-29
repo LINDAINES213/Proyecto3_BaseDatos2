@@ -153,7 +153,7 @@ class Table:
 
         # Guardar los cambios en el archivo JSON
         self.save_to_json(f'{self.name}')
-        print(self.data)
+
 
     def get(self, row_key, column_family=None, column=None):
         """
