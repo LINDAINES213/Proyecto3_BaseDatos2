@@ -25,13 +25,13 @@
   "data": [
     {
       "row_key": "row_key1",
-      "column_family": "testcolumn1",
+      "column_family": "testcolumn2",
       "column_qualifier": "column_qualifier1",
       "timestamp": ""
     },
     {
-      "row_key": "row_key1",
-      "column_family": "testcolumn2",
+      "row_key": "sow_key1",
+      "column_family": "testcolumn1",
       "column_qualifier": "column_qualifier1",
       "timestamp": ""
     }
