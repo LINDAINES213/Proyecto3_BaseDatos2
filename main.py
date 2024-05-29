@@ -201,14 +201,18 @@ def main():
 
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
-        if len(args.put_args) > 3:
-            result = tabla.delete(
-                args.put_args[1], args.put_args[2], args.put_args[3])
-        elif len(args.put_args) > 2:
-            result = tabla.delete(args.put_args[1], args.put_args[2])
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
         else:
-            result = tabla.delete(args.put_args[1])
-        print(result)
+            
+            if len(args.put_args) > 3:
+                result = tabla.delete(
+                    args.put_args[1], args.put_args[2], args.put_args[3])
+            elif len(args.put_args) > 2:
+                result = tabla.delete(args.put_args[1], args.put_args[2])
+            else:
+                result = tabla.delete(args.put_args[1])
+            print(result)
 
     elif args.comando == 'deleteAll':
         if not args.put_args[0] or not args.put_args[1]:
@@ -217,8 +221,11 @@ def main():
 
         tabla = Table(args.put_args[0], [])
         tabla.load_from_json(args.put_args[0])
-        result = tabla.deleteAll(args.put_args[1])
-        print(result)
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
+        else:
+            result = tabla.deleteAll(args.put_args[1])
+            print(result)
 
     elif args.comando == 'alter':
         if not args.put_args[0] or not args.put_args[1]:

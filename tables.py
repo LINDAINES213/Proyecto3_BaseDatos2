@@ -358,7 +358,6 @@ class Table:
         self.save_to_json(self.name)
         return f"Toda la fila con clave '{row_key}' ha sido eliminada de la tabla."
 
-    
     def truncate(self):
         """
         Trunca (vacía) la tabla deshabilitándola, eliminándola y recreándola con la misma estructura.
