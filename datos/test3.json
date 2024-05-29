@@ -2,66 +2,171 @@
   "table_name": "test3",
   "column_families": [
     {
-      "name": "testcolumn1",
-      "max_versions": 8,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 73479,
-      "blocksize": 33040,
-      "blockcache": false
-    },
-    {
-      "name": "testcolumn2",
-      "max_versions": 5,
-      "compression": "NONE",
-      "in_memory": false,
-      "bloom_filter": "ROW",
-      "ttl": 353376,
-      "blocksize": 6072,
-      "blockcache": false
-    },
-    {
-      "name": "testcolumn3",
+      "name": "t",
       "max_versions": 3,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 301541,
-      "blocksize": 65452,
+      "ttl": 407382,
+      "blocksize": 44782,
+      "blockcache": false
+    },
+    {
+      "name": "e",
+      "max_versions": 0,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 531829,
+      "blocksize": 19725,
+      "blockcache": false
+    },
+    {
+      "name": "s",
+      "max_versions": 0,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 403420,
+      "blocksize": 18667,
+      "blockcache": false
+    },
+    {
+      "name": "t",
+      "max_versions": 7,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 189353,
+      "blocksize": 48552,
+      "blockcache": false
+    },
+    {
+      "name": "c",
+      "max_versions": 4,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 442313,
+      "blocksize": 50229,
+      "blockcache": false
+    },
+    {
+      "name": "o",
+      "max_versions": 2,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 245598,
+      "blocksize": 56553,
+      "blockcache": false
+    },
+    {
+      "name": "l",
+      "max_versions": 2,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 262587,
+      "blocksize": 25770,
+      "blockcache": false
+    },
+    {
+      "name": "u",
+      "max_versions": 8,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 580577,
+      "blocksize": 12934,
+      "blockcache": false
+    },
+    {
+      "name": "m",
+      "max_versions": 7,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 527929,
+      "blocksize": 42331,
+      "blockcache": false
+    },
+    {
+      "name": "n",
+      "max_versions": 8,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 434790,
+      "blocksize": 52554,
+      "blockcache": false
+    },
+    {
+      "name": "1",
+      "max_versions": 1,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 104187,
+      "blocksize": 50651,
       "blockcache": false
     }
   ],
   "data": [
     {
       "row_key": "row_key1",
-      "columns": [
-        {
-          "family": "testcolumn2",
-          "column": "test",
-          "timestamp": []
-        }
-      ]
+      "columns": "t",
+      "timestamps": []
     },
     {
-      "row_key": "row_key2",
-      "columns": [
-        {
-          "family": "testcolumn1",
-          "column": "test",
-          "timestamp": []
-        }
-      ]
+      "row_key": "row_key1",
+      "columns": "e",
+      "timestamps": []
     },
     {
-      "row_key": "row_key9",
-      "columns": [
-        {
-          "family": "testcolumn3",
-          "column": "test",
-          "timestamp": []
-        }
-      ]
+      "row_key": "row_key1",
+      "columns": "s",
+      "timestamps": []
+    },
+    {
+      "row_key": "row_key1",
+      "columns": "t",
+      "timestamps": []
+    },
+    {
+      "row_key": "row_key1",
+      "columns": "c",
+      "timestamps": []
+    },
+    {
+      "row_key": "row_key1",
+      "columns": "o",
+      "timestamps": []
+    },
+    {
+      "row_key": "row_key1",
+      "columns": "l",
+      "timestamps": []
+    },
+    {
+      "row_key": "row_key1",
+      "columns": "u",
+      "timestamps": []
+    },
+    {
+      "row_key": "row_key1",
+      "columns": "m",
+      "timestamps": []
+    },
+    {
+      "row_key": "row_key1",
+      "columns": "n",
+      "timestamps": []
+    },
+    {
+      "row_key": "row_key1",
+      "columns": "1",
+      "timestamps": []
     }
   ],
   "disabled": false
