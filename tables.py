@@ -129,7 +129,8 @@ class Table:
         col_family = next(
             (cf for cf in self.column_families if cf['name'] == family), None)
         if not col_family:
-            raise ValueError(f"La familia de columnas '{family}' no existe en la tabla.")
+            raise ValueError(f"La familia de columnas '{
+                             family}' no existe en la tabla.")
         max_versions = col_family.get('max_versions', 1)
 
         # Si la fila no existe, crearla
@@ -148,7 +149,8 @@ class Table:
             # Si el número de versiones excede max_versions, eliminar el último elemento
             max_versions = col_family.get('max_versions', 1)
             if len(self.data.at[row_key, col_key]) > max_versions:
-                self.data.at[row_key, col_key] = self.data.at[row_key, col_key][:max_versions]
+                self.data.at[row_key, col_key] = self.data.at[row_key,
+                                                              col_key][:max_versions]
         else:
             # Si no es una lista, continuar con la lógica original para verificar si es NaN o None
             if pd.isna(self.data.at[row_key, col_key]) or self.data.at[row_key, col_key] is None:
@@ -164,11 +166,11 @@ class Table:
                     self.data.at[row_key, col_key].insert(0, value)
                     # Si el número de versiones excede max_versions, eliminar el último elemento
                     if len(self.data.at[row_key, col_key]) > max_versions:
-                        self.data.at[row_key, col_key] = self.data.at[row_key, col_key][:max_versions]
+                        self.data.at[row_key, col_key] = self.data.at[row_key,
+                                                                      col_key][:max_versions]
 
         # Guardar los cambios en el archivo JSON
         self.save_to_json(f'{self.name}')
-
 
     def get(self, row_key, column_family=None, column=None):
         """
@@ -192,23 +194,27 @@ class Table:
             return f"La fila con clave '{row_key}' no existe en la tabla."
 
         if column_family and column:
-            filtered_data = row_data[row_data.index.str.contains(f"^{column_family}:{column}:")]
+            filtered_data = row_data[row_data.index.str.contains(
+                f"^{column_family}:{column}:")]
             if filtered_data.empty:
                 return f"La columna '{column_family}:{column}' no existe en la fila '{row_key}'."
             else:
                 return filtered_data.to_string(header=False)
 
         elif column_family:
-            filtered_data = row_data[row_data.index.str.startswith(f"{column_family}:")]
+            filtered_data = row_data[row_data.index.str.startswith(
+                f"{column_family}:")]
             return filtered_data.to_string(header=False)
 
         else:
             table = defaultdict(list)
             for col, value in row_data.items():
-                table[col].append(value[0] if isinstance(value, list) else value)
+                table[col].append(
+                    value[0] if isinstance(value, list) else value)
 
             headers = list(table.keys())
-            rows = [list(values) for values in zip_longest(*table.values(), fillvalue='')]
+            rows = [list(values)
+                    for values in zip_longest(*table.values(), fillvalue='')]
 
             return tabulate(rows, headers=headers, tablefmt="grid")
 
@@ -275,7 +281,8 @@ class Table:
 
         for family in self.column_families:
             row_key = f"{row_key_base}{row_key_counter}"
-            column_qualifier = f"{column_qualifier_base}{column_qualifier_counter}"
+            column_qualifier = f"{column_qualifier_base}{
+                column_qualifier_counter}"
 
             data['data'].append({
                 'row_key': row_key,
