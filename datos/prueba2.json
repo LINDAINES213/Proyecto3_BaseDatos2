@@ -3,42 +3,42 @@
   "column_families": [
     {
       "name": "prueba2",
-      "max_versions": 7,
+      "max_versions": 4,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 150878,
-      "blocksize": 16187,
+      "ttl": 273334,
+      "blocksize": 61664,
       "blockcache": false
     },
     {
       "name": "CF1",
-      "max_versions": 4,
+      "max_versions": 6,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 372888,
-      "blocksize": 35466,
+      "ttl": 132511,
+      "blocksize": 31643,
       "blockcache": false
     },
     {
       "name": "CF2",
-      "max_versions": 4,
+      "max_versions": 7,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 238683,
-      "blocksize": 51420,
+      "ttl": 529266,
+      "blocksize": 21335,
       "blockcache": false
     },
     {
       "name": "CF3",
-      "max_versions": 8,
+      "max_versions": 9,
       "compression": "NONE",
       "in_memory": false,
       "bloom_filter": "ROW",
-      "ttl": 187729,
-      "blocksize": 25197,
+      "ttl": 574244,
+      "blocksize": 22510,
       "blockcache": false
     }
   ],
@@ -52,12 +52,12 @@
           "timestamps": "NaN"
         },
         {
-          "family": "CF1",
+          "family": "prueba2",
           "column": "test",
           "timestamps": "NaN"
         },
         {
-          "family": "prueba2",
+          "family": "CF1",
           "column": "test",
           "timestamps": "NaN"
         },
@@ -70,13 +70,14 @@
           "family": "CF2",
           "column": "qual2",
           "timestamps": [
+            "value2_updated_again",
             "value2_updated"
           ]
         }
       ]
     },
     {
-      "row_key": "row_key2",
+      "row_key": "row_key10",
       "columns": [
         {
           "family": "CF3",
@@ -84,12 +85,12 @@
           "timestamps": []
         },
         {
-          "family": "CF1",
+          "family": "prueba2",
           "column": "test",
           "timestamps": "NaN"
         },
         {
-          "family": "prueba2",
+          "family": "CF1",
           "column": "test",
           "timestamps": "NaN"
         },
@@ -114,12 +115,12 @@
           "timestamps": "NaN"
         },
         {
-          "family": "CF1",
+          "family": "prueba2",
           "column": "test",
           "timestamps": []
         },
         {
-          "family": "prueba2",
+          "family": "CF1",
           "column": "test",
           "timestamps": "NaN"
         },
@@ -136,7 +137,7 @@
       ]
     },
     {
-      "row_key": "row_key6",
+      "row_key": "row_key4",
       "columns": [
         {
           "family": "CF3",
@@ -144,12 +145,12 @@
           "timestamps": "NaN"
         },
         {
-          "family": "CF1",
+          "family": "prueba2",
           "column": "test",
           "timestamps": "NaN"
         },
         {
-          "family": "prueba2",
+          "family": "CF1",
           "column": "test",
           "timestamps": []
         },
@@ -166,7 +167,7 @@
       ]
     },
     {
-      "row_key": "row_key8",
+      "row_key": "row_key7",
       "columns": [
         {
           "family": "CF3",
@@ -174,12 +175,12 @@
           "timestamps": "NaN"
         },
         {
-          "family": "CF1",
+          "family": "prueba2",
           "column": "test",
           "timestamps": "NaN"
         },
         {
-          "family": "prueba2",
+          "family": "CF1",
           "column": "test",
           "timestamps": "NaN"
         },
@@ -196,5 +197,5 @@
       ]
     }
   ],
-  "disabled": false
+  "disabled": true
 }

@@ -236,44 +236,46 @@ def main():
         table = file_manager.load_table(args.put_args[0])
         if not table:
             parser.error(f"La tabla '{args.put_args[0]}' no existe.")
-
-        if args.add:
-            existing_families = [cf['name'] for cf in table.column_families]
-            if args.put_args[1] in existing_families:
-                print(f"La columna familia '{args.put_args[1]}' ya existe en la tabla '{args.put_args[0]}'.")
-            else:
-                new_family = {
-                    "name": args.put_args[1],
-                    "max_versions": 3,
-                    "compression": "NONE",
-                    "in_memory": False,
-                    "bloom_filter": "ROW",
-                    "ttl": 604800,
-                    "blocksize": 65536,
-                    "blockcache": True
-                }
-                table.column_families.append(new_family)
-                table.save_to_json(args.put_args[0])
-                print(f"La columna familia '{args.put_args[1]}' ha sido agregada a la tabla '{args.put_args[0]}'.")
-
-        elif args.modify:
-            details = create_and_convert_dict(args.modify, parser)
-            for family in table.column_families:
-                if family['name'] == args.put_args[1]:
-                    family.update(details)
-                    table.save_to_json(args.put_args[0])
-                    print(f"La columna familia '{args.put_args[1]}' ha sido modificada en la tabla '{args.put_args[0]}'.")
-                    return
-            print(f"La columna familia '{args.put_args[1]}' no se encontró en la tabla '{args.put_args[0]}'.")
-
-        elif args.delete:
-            table.column_families = [
-                cf for cf in table.column_families if cf['name'] != args.put_args[1]]
-            table.save_to_json(args.put_args[0])
-            print(f"La columna familia '{args.put_args[1]}' ha sido eliminada de la tabla '{args.put_args[0]}'.")
-
+        if table.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
         else:
-            print("Debe especificar una acción: --add, --modify <detalles> o --delete.")
+            if args.add:
+                existing_families = [cf['name'] for cf in table.column_families]
+                if args.put_args[1] in existing_families:
+                    print(f"La columna familia '{args.put_args[1]}' ya existe en la tabla '{args.put_args[0]}'.")
+                else:
+                    new_family = {
+                        "name": args.put_args[1],
+                        "max_versions": 3,
+                        "compression": "NONE",
+                        "in_memory": False,
+                        "bloom_filter": "ROW",
+                        "ttl": 604800,
+                        "blocksize": 65536,
+                        "blockcache": True
+                    }
+                    table.column_families.append(new_family)
+                    table.save_to_json(args.put_args[0])
+                    print(f"La columna familia '{args.put_args[1]}' ha sido agregada a la tabla '{args.put_args[0]}'.")
+
+            elif args.modify:
+                details = create_and_convert_dict(args.modify, parser)
+                for family in table.column_families:
+                    if family['name'] == args.put_args[1]:
+                        family.update(details)
+                        table.save_to_json(args.put_args[0])
+                        print(f"La columna familia '{args.put_args[1]}' ha sido modificada en la tabla '{args.put_args[0]}'.")
+                        return
+                print(f"La columna familia '{args.put_args[1]}' no se encontró en la tabla '{args.put_args[0]}'.")
+
+            elif args.delete:
+                table.column_families = [
+                    cf for cf in table.column_families if cf['name'] != args.put_args[1]]
+                table.save_to_json(args.put_args[0])
+                print(f"La columna familia '{args.put_args[1]}' ha sido eliminada de la tabla '{args.put_args[0]}'.")
+
+            else:
+                print("Debe especificar una acción: --add, --modify <detalles> o --delete.")
 
     elif args.comando == 'truncate':
         if not args.put_args[0]:
