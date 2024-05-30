@@ -286,44 +286,47 @@ def main():
         print(result)
 
     elif args.comando == 'create':
-        if not args.put_args[0] or not args.put_args[1]:
-            parser.error(
-                'Debe proporcionar el nombre de la tabla y al menos una familia de columnas.')
-        # Crear la tabla con las familias de columnas especificadas
-        column_families = [{
-            'name': name,
-            'max_versions': random.randint(0, 10),
-            'compression': 'NONE',
-            'in_memory': False,
-            'bloom_filter': 'ROW',
-            'ttl': random.randint(3600, 604800),
-            'blocksize': random.randint(1024, 65536),
-            'blockcache': False
-        } for name in args.put_args]
-        data = []
-        for i in range(1, 6):  # Generar datos para 5 filas de ejemplo
-            row_key = f"row_{i}"
-            columns = []
-            for family in args.put_args[1]:
-                # Generar datos de ejemplo para cada columna de la familia
-                column_data = {
-                    "family": family,
-                    "column": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
-                    "timestamps": [f"Ejemplo de dato para {family}"]
+        if len(args.put_args) > 2:
+            print(len(args.put_args))
+            if not args.put_args[0] or not args.put_args[1]:
+                parser.error(
+                    'Debe proporcionar el nombre de la tabla y al menos una familia de columnas.')
+            # Crear la tabla con las familias de columnas especificadas
+            column_families = [{
+                'name': name,
+                'max_versions': random.randint(0, 10),
+                'compression': 'NONE',
+                'in_memory': False,
+                'bloom_filter': 'ROW',
+                'ttl': random.randint(3600, 604800),
+                'blocksize': random.randint(1024, 65536),
+                'blockcache': False
+            } for name in args.put_args]
+            data = []
+            for i in range(1, 6):  # Generar datos para 5 filas de ejemplo
+                row_key = f"row_{i}"
+                columns = []
+                for family in args.put_args[1]:
+                    # Generar datos de ejemplo para cada columna de la familia
+                    column_data = {
+                        "family": family,
+                        "column": "nombre",  # Puedes ajustar el nombre de la columna si es necesario
+                        "timestamps": [f"Ejemplo de dato para {family}"]
+                    }
+                    columns.append(column_data)
+                row_data = {
+                    "row_key": row_key,
+                    "columns": columns
                 }
-                columns.append(column_data)
-            row_data = {
-                "row_key": row_key,
-                "columns": columns
-            }
-            data.append(row_data)
-        table = Table(args.put_args[0], column_families)
+                data.append(row_data)
+            table = Table(args.put_args[0], column_families)
 
-        # Guardar la tabla en formato JSON
-        json_file = f"{args.put_args[0]}"
-        table.initialize_empty_table(json_file)
-        print(f"Tabla '{args.put_args[0]}' creada exitosamente con las siguientes familias de columnas: {', '.join(args.put_args[1:])}")
-
+            # Guardar la tabla en formato JSON
+            json_file = f"{args.put_args[0]}"
+            table.initialize_empty_table(json_file)
+            print(f"Tabla '{args.put_args[0]}' creada exitosamente con las siguientes familias de columnas: {', '.join(args.put_args[1:])}")
+        else:
+            print("Tabla no valida.")
 
     elif args.comando == 'insert_many':
         if not args.tabla or not args.row_key or not args.columnas_y_valores:

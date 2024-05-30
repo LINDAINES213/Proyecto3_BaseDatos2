@@ -1,0 +1,99 @@
+#1 python main.py list
+#2 python main.py create tabla_no_valida
+#3 python main.py create prueba1 CF1
+#4 python main.py list
+#5 python main.py create prueba2 CF1 CF2 CF3
+#6 python main.py describe prueba2
+#7 python main.py list
+#8 python main.py put prueba2 row1 CF1:qual1 "value1"
+   python main.py put prueba2 row1 CF2:qual2 "value2"
+   python main.py put prueba2 row1 CF3:qual3 "value3"
+
+#9 python main.py put prueba2 row1 CF2:qual2 "value2_updated"
+
+#10 python main.py put prueba2 row1 CF2:qual2 "value2_updated_again"
+
+#11 python main.py put prueba2 row1 CF2:qual2 "value2_updated_once_more"
+
+#12 python main.py get prueba2 row1 CF2:qual2 --versions=3
+
+#13 python main.py is_enabled prueba2
+
+#14 python main.py disable prueba2
+
+#15 python main.py put prueba2 row2 CF1:qual1 "value1"
+
+#16 python main.py is_disabled prueba2
+
+#17 python main.py disable prueba2
+
+#18 python main.py enable prueba2
+
+#19 python main.py enable prueba2
+
+#20 python main.py put prueba2 row3 CF1:qual1 "value1"
+
+#21 python main.py put prueba1 row1 CF1:qual1 "value1"
+
+#22 python main.py get prueba2 row1
+
+#23 python main.py get prueba2 row1 CF1
+
+#24 python main.py get prueba2 row1 CF1:qual1
+
+#25 python main.py get prueba2 row1 CF1:qual1 --versions=3
+
+#26 python main.py scan prueba2
+
+#27 python main.py scan tabla_grande
+
+#28 python main.py alter prueba2 CF4 --add
+
+#29 python main.py alter prueba2 CF4 --modify max_versions 5 ttl 1209600
+
+#30 python main.py disable prueba2
+
+#31 python main.py alter prueba2 CF4 --delete
+
+#32 python main.py enable prueba2
+
+#33 python main.py alter prueba2 CF4 --delete
+
+#34 python main.py count prueba2
+
+#35 python main.py count tabla_grande
+
+#36 python main.py truncate tabla_pequena1
+
+#37 python main.py disable tabla_pequena2
+
+#38 python main.py truncate tabla_pequena2
+
+#39 python main.py delete prueba1 row1
+
+#40 python main.py disable prueba2
+
+#41 python main.py delete prueba2 row2
+
+#42 python main.py enable prueba2
+
+#43 python main.py delete_all prueba2 row1
+    python main.py delete_all prueba2 row2
+    python main.py delete_all prueba2 row3
+
+#44 python main.py put prueba2 row4 CF1:qual1 "value1"
+    python main.py put prueba2 row4 CF2:qual2 "value2"
+    python main.py put prueba2 row4 CF3:qual3 "value3"
+
+#45 python main.py disable prueba2
+
+#46 python main.py delete_all prueba2 row4
+
+#47 python main.py enable prueba2
+
+#48 python main.py drop tabla_pequena2
+
+#49 python main.py drop prueba2
+
+#50 python main.py drop_all
+

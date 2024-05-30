@@ -1,0 +1,200 @@
+{
+  "table_name": "prueba2",
+  "column_families": [
+    {
+      "name": "prueba2",
+      "max_versions": 7,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 150878,
+      "blocksize": 16187,
+      "blockcache": false
+    },
+    {
+      "name": "CF1",
+      "max_versions": 4,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 372888,
+      "blocksize": 35466,
+      "blockcache": false
+    },
+    {
+      "name": "CF2",
+      "max_versions": 4,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 238683,
+      "blocksize": 51420,
+      "blockcache": false
+    },
+    {
+      "name": "CF3",
+      "max_versions": 8,
+      "compression": "NONE",
+      "in_memory": false,
+      "bloom_filter": "ROW",
+      "ttl": 187729,
+      "blocksize": 25197,
+      "blockcache": false
+    }
+  ],
+  "data": [
+    {
+      "row_key": "row1",
+      "columns": [
+        {
+          "family": "CF3",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF1",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "prueba2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF2",
+          "column": "qual2",
+          "timestamps": [
+            "value2_updated"
+          ]
+        }
+      ]
+    },
+    {
+      "row_key": "row_key2",
+      "columns": [
+        {
+          "family": "CF3",
+          "column": "test",
+          "timestamps": []
+        },
+        {
+          "family": "CF1",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "prueba2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF2",
+          "column": "qual2",
+          "timestamps": "NaN"
+        }
+      ]
+    },
+    {
+      "row_key": "row_key3",
+      "columns": [
+        {
+          "family": "CF3",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF1",
+          "column": "test",
+          "timestamps": []
+        },
+        {
+          "family": "prueba2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF2",
+          "column": "qual2",
+          "timestamps": "NaN"
+        }
+      ]
+    },
+    {
+      "row_key": "row_key6",
+      "columns": [
+        {
+          "family": "CF3",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF1",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "prueba2",
+          "column": "test",
+          "timestamps": []
+        },
+        {
+          "family": "CF2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF2",
+          "column": "qual2",
+          "timestamps": "NaN"
+        }
+      ]
+    },
+    {
+      "row_key": "row_key8",
+      "columns": [
+        {
+          "family": "CF3",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF1",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "prueba2",
+          "column": "test",
+          "timestamps": "NaN"
+        },
+        {
+          "family": "CF2",
+          "column": "test",
+          "timestamps": []
+        },
+        {
+          "family": "CF2",
+          "column": "qual2",
+          "timestamps": "NaN"
+        }
+      ]
+    }
+  ],
+  "disabled": false
+}

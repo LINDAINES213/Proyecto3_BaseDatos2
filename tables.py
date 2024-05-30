@@ -96,7 +96,9 @@ class Table:
             for col_key, value in row.items():
                 if col_key != 'row_key':
                     if not isinstance(value, list) and not isinstance(value, str):
-                        if math.isnan(value):
+                        if value is None:
+                            value = 'NaN'  # or whatever representation you prefer for None
+                        elif math.isnan(value):
                             value = 'NaN'
                     family, col_name = col_key.split(':')
                     column = {
@@ -252,7 +254,10 @@ class Table:
                     processed_row[col_name] = "NaN"
                 else:
                     # Proceder con el acceso a los elementos de timestamps
-                    processed_row[col_name] = timestamps[0]
+                    if timestamps:
+                        processed_row[col_name] = timestamps[0]
+                    else:
+                        processed_row[col_name] = "NaN"
             processed_data.append(processed_row)
 
         formatted_data = pd.DataFrame(processed_data)
