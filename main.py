@@ -286,8 +286,7 @@ def main():
         print(result)
 
     elif args.comando == 'create':
-        if len(args.put_args) > 2:
-            print(len(args.put_args))
+        if len(args.put_args) > 1:
             if not args.put_args[0] or not args.put_args[1]:
                 parser.error(
                     'Debe proporcionar el nombre de la tabla y al menos una familia de columnas.')
