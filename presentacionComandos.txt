@@ -15,7 +15,7 @@
 
 #11 python main.py put prueba2 row1 CF2:qual2 "value2_updated_once_more"
 
-#12 python main.py get prueba2 row1 CF2:qual2 --versions=3
+#12 python main.py get prueba2 row1
 
 #13 python main.py is_enabled prueba2
 
