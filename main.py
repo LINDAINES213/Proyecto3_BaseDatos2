@@ -284,8 +284,11 @@ def main():
         tabla = Table(args.put_args[0], [])
 
         tabla.load_from_json(args.put_args[0])
-        result = tabla.truncate()
-        print(result)
+        if tabla.disabled:
+            print("No se pueden realizar acciones sobre esta tabla, está deshabilitada")
+        else:
+            result = tabla.truncate()
+            print(result)
 
     elif args.comando == 'create':
         if len(args.put_args) > 1:
